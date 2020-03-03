@@ -1,11 +1,11 @@
 // Mongoose
-//require('dotenv').config()
+require('dotenv').config()
 const mongoose = require("mongoose");
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
 // Conectar mongoose con MongoDB
-const url = "mongodb+srv://hefziben:ilive4him@database-ghufx.mongodb.net/bindy?retryWrites=true&w=majority";
+const url = process.env.DATABASE;
 
 const MONGO_USERNAME = 'bindyAdmin';
 const MONGO_PASSWORD = 'bindyt2020';

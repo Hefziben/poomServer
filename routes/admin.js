@@ -6,7 +6,7 @@ var Admin = require("../modelos/admin");
 router.get("/", function(req, res, next) {
   Admin.find({}, (err, admin) => {
     if (res.status == 400) {
-      res.send({ mensaje: "error in get request", res: status, err });
+      res.send({ mensaje: "error in get request", res: err });
     } else {
       res.send({ mensaje: "Success", res: admin });
     }
@@ -20,7 +20,7 @@ router.post("/", (req, res) => {
   const createAdmin = new Admin(newAdmin);
   createAdmin.save((err, new_Admin) => {
     if (err) {
-      res.send({ mensaje: "error in post request", res: status, err });
+      res.send({ mensaje: "error in post request", res: err });
     } else {
       res.send({ mensaje: "Admin saved", res: new_Admin });
     }

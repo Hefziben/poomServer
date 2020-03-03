@@ -15,7 +15,11 @@ const colegioSchema = new Schema(
     precio: { type: String },
     nosotros: { type: String },
     metodologia: { type: String },
-    telefono:{ type: String }
+    inclusivo:{ type: String },
+    email:{ type: String },
+    website:{ type: String },
+    telefono:{ type: String },
+    actividad:{ type: String },
 }]);
 
 const Colegio = mongoose.model('Colegio', colegioSchema);
