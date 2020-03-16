@@ -1,0 +1,15 @@
+{
+    "object":[
+        {
+            "is":"",
+            "butNot":"",
+            "whyNot":""
+        }
+    ],
+    "possibleCauses":[{
+        "object":[{
+            "value":"",
+            "Assumption":""
+        }]
+    }]
+}

@@ -8,7 +8,7 @@ require("./database");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var colegioRouter = require('./routes/colegio');
+var ticketRouter = require('./routes/ticket');
 var adminRouter = require('./routes/admin');
 var msgRouter = require('./routes/mensaje');
 var app = express();
@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads',express.static(path.join(__dirname, 'uploads')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/colegio', colegioRouter);
+app.use('/ticket', ticketRouter);
 app.use('/admin', adminRouter);
 app.use('/mensaje', msgRouter);
 app.use(express.static('public'))
