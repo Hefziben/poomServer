@@ -5,13 +5,12 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
 // Conectar mongoose con MongoDB
-const url = process.env.DATABASE;
-
-const MONGO_USERNAME = 'bindyAdmin';
-const MONGO_PASSWORD = 'bindyt2020';
+const url = process.env.CREDENTIALS;
+const MONGO_USERNAME = 'Admin';
+const MONGO_PASSWORD = '!Agendahoy2020';
 const MONGO_HOSTNAME = 'localhost';
 const MONGO_PORT = '27016';
-const MONGO_DB = 'bindy';
+const MONGO_DB = 'poom1';
 //const url = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`;
 
 // Connect to MongoDB
