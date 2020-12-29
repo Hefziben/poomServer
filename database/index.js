@@ -6,13 +6,6 @@ mongoose.set('useCreateIndex', true);
 
 // Conectar mongoose con MongoDB
 const url = process.env.CREDENTIALS;
-const MONGO_USERNAME = 'Admin';
-const MONGO_PASSWORD = '!Agendahoy2020';
-const MONGO_HOSTNAME = 'localhost';
-const MONGO_PORT = '27016';
-const MONGO_DB = 'poom1';
-//const url = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`;
-
 // Connect to MongoDB
 
 mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true  });
