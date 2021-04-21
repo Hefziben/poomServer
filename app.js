@@ -11,13 +11,15 @@ var comercioRouter = require('./routes/comercio');
 var userRouter = require('./routes/user');
 var promoRouter = require('./routes/promo');
 var interesRouter = require('./routes/interes');
+var adminRouter = require('./routes/admin-user');
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 // app.use(cors({
-//   origin: 'https://binndy.com' 
+//   origin: 'http://localhost:8100' 
+  
 // }));
 app.use(logger('dev'));
 app.use(express.json());
@@ -30,6 +32,9 @@ app.use('/comercio', comercioRouter);
 app.use('/user', userRouter);
 app.use('/promo', promoRouter);
 app.use('/interes', interesRouter);
+app.use('/admin', adminRouter);
+
+
 app.use(express.static('public'))
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
