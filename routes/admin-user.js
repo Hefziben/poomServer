@@ -19,6 +19,23 @@ router.get("/get", function(req, res, next) {
   });
 });
 
+
+
+//add admin with file
+router.post("/cre", (req, res) => {
+  const admin = req.body;
+  const crearAdmin = new Admin(admin);
+  crearAdmin.save((err, nuevo_Admin) => {
+    if (err) {
+      errMsj = err.message;
+
+      res.send(errMsj);
+    } else {
+      res.send("Admin guardado con exito");
+    }
+  });
+});
+
 router.post("/", (req, res) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
