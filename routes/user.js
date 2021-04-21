@@ -96,6 +96,7 @@ User.findByIdAndUpdate(userId, { $set: req.body }, { new: true })
 //Update User with file
 router.put("/file/:id", upload.single("file_path"), (req, res) => {
   const authHeader = req.headers.authorization;
+  console.log(authHeader);
   if (authHeader) {
     const token = authHeader.split(' ')[1];
     jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
