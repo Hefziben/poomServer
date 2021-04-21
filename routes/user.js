@@ -129,7 +129,7 @@ router.post("/login/", function(req, res, next) {
   
   const user = req.body;
 
-  Usuario.findOne({telefono:user.telefono,contrasena:user.contrasena}, (err, response) => {
+  User.findOne({telefono:user.telefono,contrasena:user.contrasena}, (err, response) => {
   
     if (res.status == 400) {
       res.send({ mensaje: "error in get request", res: err });
