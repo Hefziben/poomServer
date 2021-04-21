@@ -53,9 +53,9 @@ router.get("/:id", (req, res) => {
 });
 
 /* Veryfi user. */
-router.get("/verify/:id", function(req, res, next) {
-  const param = req.params.id;
-  User.findOne({ $or: [ { telefono: param}, { email: param } ] }, (err, data) => {
+router.post("/verify/", function(req, res, next) {
+  const user = req.body;
+  User.findOne({ telefono: user.telefono}, (err, data) => {
     if (res.status == 400) {
       res.send({ mensaje: "error in get request", res: err });
     } else {
