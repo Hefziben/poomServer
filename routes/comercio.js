@@ -148,10 +148,6 @@ router.get("/:id", (req, res) => {
           .exec()
           .then(data => res.status(200).send(data))
           .catch(err => res.status(400).send(err));
-        
-      
-
-
   });
   } else {
     res.sendStatus(401);

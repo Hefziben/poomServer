@@ -70,42 +70,33 @@ router.post("/verify/", function(req, res, next) {
 });
 //Update User
 router.put("/:id", (req, res) => {
-  const authHeader = req.headers.authorization;
-  if (authHeader) {
-    const token = authHeader.split(' ')[1];
-    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-      if (err) {
-          return res.sendStatus(403);
-      }
-      if (user.role == "Admin" || user.role == "User") {
-//process request
-const userId = req.params.id;
+  const userId = req.params.id;
 User.findByIdAndUpdate(userId, { $set: req.body }, { new: true })
   .then(data => res.status(200).send(data))
-  .catch(err => res.status(400).send(err));        
-      }
+  .catch(err => res.status(400).send(err));     
+  // const authHeader = req.headers.authorization;
+  // if (authHeader) {
+  //   const token = authHeader.split(' ')[1];
+  //   jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+  //     if (err) {
+  //         return res.sendStatus(403);
+  //     }
+  //     if (user.role == "Admin" || user.role == "User") {
+
+   
+  //     }
 
 
-  });
-  } else {
-    res.sendStatus(401);
-  }
+  // });
+  // } else {
+  //   res.sendStatus(401);
+  // }
 
 });
 
 //Update User with file
 router.put("/file/:id", upload.single("file_path"), (req, res) => {
-  const authHeader = req.headers.authorization;
-  console.log(authHeader);
-  if (authHeader) {
-    const token = authHeader.split(' ')[1];
-    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-      console.log(user);
-      if (err) {
-          return res.sendStatus(403);
-      }
-      if (user.role == "Admin" || user.role == "User") {
-//process request
+  //process request
 const userId = req.params.id;
 const file = req.file;
 const update = {
@@ -117,13 +108,24 @@ console.log(update);
 User.findByIdAndUpdate(userId, { $set: update }, { new: true })
   .then(data => res.status(200).send({mensaje:"usuario actualizado",url:data.imagen}))
   .catch(err => res.status(400).send(err));
-      }
+  const authHeader = req.headers.authorization;
+  console.log(authHeader);
+  // if (authHeader) {
+  //   const token = authHeader.split(' ')[1];
+  //   jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+  //     console.log(user);
+  //     if (err) {
+  //         return res.sendStatus(403);
+  //     }
+  //     if (user.role == "Admin" || user.role == "User") {
+
+  //     }
 
 
-  });
-  } else {
-    res.sendStatus(401);
-  }
+  // });
+  // } else {
+  //   res.sendStatus(401);
+  // }
 
 });
 
