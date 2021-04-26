@@ -20,30 +20,13 @@ const upload = multer({
 
 /* GET comercios listing. */
 router.get("/", function(req, res, next) {
-  const authHeader = req.headers.authorization;
-  if (authHeader) {
-    const token = authHeader.split(' ')[1];
-    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-      if (err) {
-          return res.sendStatus(403);
-      }
-
-        //process request
-Comercio.find({}, (err, comercios) => {
-  if (res.status == 400) {
-    res.send({ mensaje: "error en la petición", res: status, err });
-  } else {
-    res.send(comercios);
-  }
-});
-      
-
-
+  Comercio.find({}, (err, comercios) => {
+    if (res.status == 400) {
+      res.send({ mensaje: "error en la petición", res: status, err });
+    } else {
+      res.send(comercios);
+    }
   });
-  } else {
-    res.sendStatus(401);
-  }
-
 });
 
 
