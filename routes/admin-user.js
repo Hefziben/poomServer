@@ -3,10 +3,6 @@ var router = express.Router();
 var Admin = require("../modelos/admin-user");
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
-data = base64urlEncode (header) + "." + base64urlEncode (payload)
-signature = Hash (data, appSecret)
-
-
 
 /* GET admins listing. */
 router.get("/get", function(req, res, next) {
