@@ -87,16 +87,7 @@ router.post("/", (req, res) => {
       }
       if (user.role == "Admin") {
         //process request
-        if(req.body.batch){
-          Comercio.create(req.body.batch, function(err){
-            if(err)
-              res.send(err);
-        
-            else
-              res.json(req.body);
-          });
-        } else {
-          const crearComercio = new Comercio(req.body);
+             const crearComercio = new Comercio(req.body);
           crearComercio.save((err, nuevo_Comercio) => {
             if (err) {
               errMsj = err.message;
@@ -106,7 +97,7 @@ router.post("/", (req, res) => {
               res.send("Comercio guardado con exito");
             }
           });
-        }
+        
       }
 
 

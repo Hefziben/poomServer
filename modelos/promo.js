@@ -13,7 +13,8 @@ const promoSchema = new Schema(
         lng:{ type: Number},
     }
     ],
-    codigo:{ type: String, default:''}
+    codigo:{ type: String, default:''},
+    telefono:{ type: String, default:''},
 }]);
 
 const Promo = mongoose.model('Promo', promoSchema);
