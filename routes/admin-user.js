@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config()
 data = base64urlEncode (header) + "." + base64urlEncode (payload)
 signature = Hash (data, appSecret)
-console.log(signature);
+
 
 
 /* GET admins listing. */

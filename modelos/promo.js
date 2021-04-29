@@ -14,7 +14,7 @@ const promoSchema = new Schema(
     }
     ],
     codigo:{ type: String, default:''},
-    telefono:{ type: String, default:''},
+    telefono:{ type: String, default:''}
 }]);
 
 const Promo = mongoose.model('Promo', promoSchema);
