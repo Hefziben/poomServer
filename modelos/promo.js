@@ -7,6 +7,7 @@ const promoSchema = new Schema(
     categoria:{ type: String,default:''},
     imagen: { type: String,default:''},
     validez:{ type:String, default:''},
+    telefono:{ type: String, default:''},
     ubicacion: [
     {
         lat:{ type: Number},
@@ -14,7 +15,7 @@ const promoSchema = new Schema(
     }
     ],
     codigo:{ type: String, default:''},
-    telefono:{ type: String, default:''}
+    
 }]);
 
 const Promo = mongoose.model('Promo', promoSchema);
