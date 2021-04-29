@@ -77,7 +77,6 @@ router.post("/login/", function(req, res, next) {
       res.send({ mensaje: "error in get request", res: err });
     } else {
       if (response) {
-        console.log(response);
         // generar token
         const accessToken = jwt.sign({ username: user.name,  role:response.role}, process.env.TOKEN_SECRET,{ expiresIn: '86400s' });
 
@@ -122,7 +121,6 @@ router.get("/:id", (req, res) => {
 //Update Admin
 router.put("/:id", (req, res) => {
   const adminId = req.params.id;
-  console.log(adminId);
   const authHeader = req.headers.authorization;
   if (authHeader) {
     const token = authHeader.split(' ')[1];
