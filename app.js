@@ -18,7 +18,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.use(cors({
-  origin: ["https://panel.poomapp.com","https://poomapp.com"] 
+  origin: "*" 
   
 }));
 app.use(logger('dev'));
