@@ -1,8 +1,18 @@
 var express = require("express");
 var router = express.Router();
 var Promo = require("../modelos/promo");
+var Usuarios = require("../modelos/user");
 const multer = require("multer");
 const jwt = require('jsonwebtoken');
+
+var admin = require("firebase-admin");
+
+var serviceAccount = require("../poom-service-key.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
 require('dotenv').config()
 
 const storage = multer.diskStorage({
@@ -61,7 +71,16 @@ crearPromo.save((err, nuevo_Promo) => {
 
     res.send(errMsj);
   } else {
-    res.send({ msg:"Promo guardado con exito", id:nuevo_Promo});
+    Usuarios.find({'intereses.name':promo.categoria}, (err, usuarios) => {
+      console.log(usuarios);
+      if (res.status == 400) {
+        res.send({ mensaje: "error en la petición", res: status, err });
+      } else {
+
+        res.send({ msg:"Promo guardado con exito", id:nuevo_Promo});
+      }
+    });
+
   }
 });
         
@@ -179,5 +198,24 @@ Promo.findByIdAndDelete(messageId)
 
 });
 
+function postNotification(comercio,tokens){
+  var registrationToken = 'cl9vJfRgQMSzN9LfE51ZB_:APA91bEnCwS1D3eSG0xKxs8ObjCSbHbyozE9ptKQ6zxoNTY6yoBowAFuE4s9fSXxmocBxHZzpLxmQ23MhoABGUEs9jQnQSTAG2yFFabxak5GYDRNylxVNplAJS-HwQhfmH5to_HLuX2f';
+  var payload = {
+    notification: {
+      title: "Nueva Promoción",
+      body: `Hola rodelag tiene una nueva promocion para ti.`,
+      icon:"https://poomapp.com/assets/image/logo_poom_naranja.svg"
+    }
+  }
+  admin.messaging().sendToDevice(registrationToken, payload)
+  .then(function(response) {
+    console.log("Successfully sent message:", response);
+  })
+  .catch(function(error) {
+    console.log("Error sending message:", error);
+  });
+}
+
+//postNotification();
 
 module.exports = router;

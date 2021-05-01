@@ -12,7 +12,8 @@ const userSchema = new Schema(
     email:{ type: String },
     sexo:{ type: String },
     nacimiento:{ type: String },
-    telefono:{ type: String },    
+    telefono:{ type: String }, 
+    msgToken: { type: String, default:null},   
     cupones:[{
         id:{ type: String },
         imagen:{ type: String },
