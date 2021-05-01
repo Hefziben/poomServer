@@ -51,6 +51,7 @@ const nuevaPromo = {
   codigo: promo.codigo,
   categoria:promo.categoria,
   telefono:promo.telefono,
+  notificacion:promo.notificacion,
   ubicacion: [{lat:Number(promo.lat),lng:Number(promo.lng)}],
   imagen: file.path,
      };
@@ -62,7 +63,6 @@ crearPromo.save((err, nuevo_Promo) => {
     res.send(errMsj);
   } else {
     Usuarios.find({'intereses.name':promo.categoria}, (err, usuarios) => {
-
       if (res.status == 400) {
         res.send({ mensaje: "error en la petición", res: status, err });
       } else {
@@ -72,7 +72,7 @@ crearPromo.save((err, nuevo_Promo) => {
             tokens.push(item.msgToken)
           }
         }
-        postNotification(promo.comercio,tokens,notificacion)
+        postNotification(promo.comercio,tokens,promo.notificacion)
         res.send({ msg:"Promo guardado con exito", id:nuevo_Promo});
       }
     });
@@ -211,7 +211,7 @@ function postNotification(comercio,tokens,notificacion){
   var payload = {
     notification: {
       title: "Nueva Promoción",
-      body: `Hola, ${comercio} ${notificacion}.`,
+      body: `${comercio} ${notificacion}.`,
       icon:"https://poomapp.com/assets/image/logo_poom_naranja.svg"
     }
   }
@@ -224,6 +224,6 @@ function postNotification(comercio,tokens,notificacion){
   });
 }
 
-//postNotification();
+
 
 module.exports = router;
