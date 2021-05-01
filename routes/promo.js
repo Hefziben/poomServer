@@ -42,16 +42,7 @@ router.get("/", function(req, res, next) {
 
 //add promo
 router.post("/", upload.single("file_path"), (req, res) => {
-  const authHeader = req.headers.authorization;
-  if (authHeader) {
-    const token = authHeader.split(' ')[1];
-    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-      if (err) {
-          return res.sendStatus(403);
-      }
-      if (user.role == "Admin") {
-//process request
-  
+  //process request  
 const file = req.file;
 const promo = req.body;
 const nuevaPromo = {
@@ -83,14 +74,23 @@ crearPromo.save((err, nuevo_Promo) => {
 
   }
 });
+  // const authHeader = req.headers.authorization;
+  // if (authHeader) {
+  //   const token = authHeader.split(' ')[1];
+  //   jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+  //     if (err) {
+  //         return res.sendStatus(403);
+  //     }
+  //     if (user.role == "Admin") {
+
         
-      }
+  //     }
 
 
-  });
-  } else {
-    res.sendStatus(401);
-  }
+  // });
+  // } else {
+  //   res.sendStatus(401);
+  // }
 
 
 });
@@ -107,42 +107,35 @@ router.get("/:id", (req, res) => {
 
 //Update Promo
 router.put("/:id", (req, res) => {
-  const authHeader = req.headers.authorization;
-  if (authHeader) {
-    const token = authHeader.split(' ')[1];
-    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-      if (err) {
-          return res.sendStatus(403);
-      }
-      if (user.role == "Admin") {
-//process request
+  //process request
 const promoId = req.params.id;
 console.log(promoId);
 Promo.findByIdAndUpdate(promoId, { $set: req.body }, { new: true })
   .then(data => res.status(200).send("Actualizado"))
   .catch(err => res.status(400).send(err));
-      }
+  // const authHeader = req.headers.authorization;
+  // if (authHeader) {
+  //   const token = authHeader.split(' ')[1];
+  //   jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+  //     if (err) {
+  //         return res.sendStatus(403);
+  //     }
+  //     if (user.role == "Admin") {
+
+  //     }
 
 
-  });
-  } else {
-    res.sendStatus(401);
-  }
+  // });
+  // } else {
+  //   res.sendStatus(401);
+  // }
 
 
 });
 
 //Update message with file
 router.put("/file/:id", upload.single("file_path"), (req, res) => {
-  const authHeader = req.headers.authorization;
-  if (authHeader) {
-    const token = authHeader.split(' ')[1];
-    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-      if (err) {
-          return res.sendStatus(403);
-      }
-      if (user.role == "Admin") {
-//process request
+  //process request
 const promoId = req.params.id;
 const file = req.file;
 console.log(file);
@@ -161,39 +154,49 @@ console.log(update);
 Promo.findByIdAndUpdate(promoId, { $set: update }, { new: true })
   .then(data => res.status(200).send("promo actualizado"))
   .catch(err => res.status(400).send(err));
-      }
+  // const authHeader = req.headers.authorization;
+  // if (authHeader) {
+  //   const token = authHeader.split(' ')[1];
+  //   jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+  //     if (err) {
+  //         return res.sendStatus(403);
+  //     }
+  //     if (user.role == "Admin") {
+
+  //     }
 
 
-  });
-  } else {
-    res.sendStatus(401);
-  }
+  // });
+  // } else {
+  //   res.sendStatus(401);
+  // }
 
 
 });
 
 //delete message
 router.delete("/:id", (req, res) => {
-  const authHeader = req.headers.authorization;
-  if (authHeader) {
-    const token = authHeader.split(' ')[1];
-    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-      if (err) {
-          return res.sendStatus(403);
-      }
-      if (user.role == "Admin") {
-//process request
+  //process request
 const messageId = req.params.id;
 Promo.findByIdAndDelete(messageId)
   .then(data => res.status(200).send("promo borrado"))
   .catch(err => res.status(400).send(err.message));
-      }
+  // const authHeader = req.headers.authorization;
+  // if (authHeader) {
+  //   const token = authHeader.split(' ')[1];
+  //   jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+  //     if (err) {
+  //         return res.sendStatus(403);
+  //     }
+  //     if (user.role == "Admin") {
+
+  //     }
 
 
-  });
-  } else {
-    res.sendStatus(401);
-  }
+  // });
+  // } else {
+  //   res.sendStatus(401);
+  // }
 
 
 });

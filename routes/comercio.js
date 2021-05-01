@@ -40,7 +40,6 @@ router.post("/crear", upload.single("file_path"), (req, res) => {
       if (err) {
           return res.sendStatus(403);
       }
-      if (user.role == "Admin") {
         //process request
 const file = req.file;
 const comercio = req.body;
@@ -66,7 +65,7 @@ crearComercio.save((err, nuevo_Comercio) => {
     res.send("Comercio guardado con exito");
   }
 });
-      }
+      
 
 
   });
@@ -85,7 +84,7 @@ router.post("/", (req, res) => {
       if (err) {
           return res.sendStatus(403);
       }
-      if (user.role == "Admin") {
+
         //process request
              const crearComercio = new Comercio(req.body);
           crearComercio.save((err, nuevo_Comercio) => {
@@ -98,7 +97,7 @@ router.post("/", (req, res) => {
             }
           });
         
-      }
+      
 
 
   });
@@ -138,7 +137,7 @@ router.put("/:id", (req, res) => {
       if (err) {
           return res.sendStatus(403);
       }
-      if (user.role == "Admin") {
+
         //process request
         const comercioId = req.params.id;
         console.log(comercioId);
@@ -146,7 +145,7 @@ router.put("/:id", (req, res) => {
         Comercio.findByIdAndUpdate(comercioId, { $set: req.body }, { new: true })
           .then(data => res.status(200).send("Actualizado"))
           .catch(err => res.status(400).send(err));
-      }
+      
 
 
   });
@@ -165,7 +164,7 @@ router.put("/file/:id", upload.single("file_path"), (req, res) => {
       if (err) {
           return res.sendStatus(403);
       }
-      if (user.role == "Admin") {
+
           //process request
   const comercioId = req.params.id;
   const file = req.file;
@@ -190,7 +189,7 @@ router.put("/file/:id", upload.single("file_path"), (req, res) => {
   Comercio.findByIdAndUpdate(comercioId, { $set: update }, { new: true })
     .then(data => res.status(200).send("comercio actualizado"))
     .catch(err => res.status(400).send(err));
-      }
+      
 
 
   });
@@ -209,16 +208,11 @@ router.delete("/:id", (req, res) => {
       if (err) {
           return res.sendStatus(403);
       }
-      if (user.role == "Admin") {
         //process request
 const messageId = req.params.id;
 Comercio.findByIdAndDelete(messageId)
   .then(data => res.status(200).send("comercio borrado"))
   .catch(err => res.status(400).send(err.message));
-        
-      }
-
-
   });
   } else {
     res.sendStatus(401);
