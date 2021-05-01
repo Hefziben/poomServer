@@ -54,7 +54,6 @@ const nuevaPromo = {
   ubicacion: [{lat:Number(promo.lat),lng:Number(promo.lng)}],
   imagen: file.path,
      };
-console.log(nuevaPromo);
 const crearPromo = new Promo(nuevaPromo);
 crearPromo.save((err, nuevo_Promo) => {
   if (err) {
@@ -63,11 +62,17 @@ crearPromo.save((err, nuevo_Promo) => {
     res.send(errMsj);
   } else {
     Usuarios.find({'intereses.name':promo.categoria}, (err, usuarios) => {
-      console.log(usuarios);
+
       if (res.status == 400) {
         res.send({ mensaje: "error en la petición", res: status, err });
       } else {
-
+        let tokens = []
+        for (const item of usuarios) {
+          if (item.msgToken) {
+            tokens.push(item.msgToken)
+          }
+        }
+        postNotification(promo.comercio,tokens,notificacion)
         res.send({ msg:"Promo guardado con exito", id:nuevo_Promo});
       }
     });
@@ -201,12 +206,12 @@ Promo.findByIdAndDelete(messageId)
 
 });
 
-function postNotification(comercio,tokens){
-  var registrationToken = 'cl9vJfRgQMSzN9LfE51ZB_:APA91bEnCwS1D3eSG0xKxs8ObjCSbHbyozE9ptKQ6zxoNTY6yoBowAFuE4s9fSXxmocBxHZzpLxmQ23MhoABGUEs9jQnQSTAG2yFFabxak5GYDRNylxVNplAJS-HwQhfmH5to_HLuX2f';
+function postNotification(comercio,tokens,notificacion){
+  var registrationToken = tokens;
   var payload = {
     notification: {
       title: "Nueva Promoción",
-      body: `Hola rodelag tiene una nueva promocion para ti.`,
+      body: `Hola, ${comercio} ${notificacion}.`,
       icon:"https://poomapp.com/assets/image/logo_poom_naranja.svg"
     }
   }
