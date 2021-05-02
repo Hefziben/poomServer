@@ -17,6 +17,13 @@ const comercioSchema = new Schema(
             codigo:{ type: String }
         }
     ],
+    canjes:[
+        {
+            promoId:{ type: String },
+            usurioId:{ type: String },
+            fecha:{ type: String },
+        }
+    ],
     imagen: { type: String },
     email:{ type: String },
     website:{ type: String },
