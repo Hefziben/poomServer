@@ -116,8 +116,8 @@ router.get("/:id", (req, res) => {
           return res.sendStatus(403);
       }
          //process request
-        var comercioId = req.params.id;
-        Comercio.findById(comercioId)
+        var id = req.params.id;
+        Comercio.findOne({ $or: [ { promociones: { codigo: id } }, { _id: id } ] })
           .exec()
           .then(data => res.status(200).send(data))
           .catch(err => res.status(400).send(err));
