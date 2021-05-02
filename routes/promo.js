@@ -50,6 +50,7 @@ const nuevaPromo = {
   validez: promo.validez,
   codigo: promo.codigo,
   categoria:promo.categoria,
+  metodo:promo.metodo,
   telefono:promo.telefono,
   notificacion:promo.notificacion,
   ubicacion: [{lat:Number(promo.lat),lng:Number(promo.lng)}],
@@ -151,7 +152,8 @@ const update = {
   categoria: promo.categoria,
   validez: promo.validez,
   imagen: file.path,
-  telefono:promo.telefono
+  telefono:promo.telefono,
+  metodo:promo.metodo
 };
 console.log(update);
 
