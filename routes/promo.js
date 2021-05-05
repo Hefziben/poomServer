@@ -73,8 +73,8 @@ crearPromo.save((err, nuevo_Promo) => {
             tokens.push(item.msgToken)
           }
         }
-        postNotification(promo.comercio,tokens,promo.notificacion)
-        res.send({ msg:"Promo guardado con exito", id:nuevo_Promo});
+        postNotification(promo.comercio,tokens,promo.notificacion,nuevo_Promo.imagen)
+        res.send({ msg:"Promo guardado con exito", data:nuevo_Promo});
       }
     });
 
@@ -208,13 +208,13 @@ Promo.findByIdAndDelete(messageId)
 
 });
 
-function postNotification(comercio,tokens,notificacion){
+function postNotification(comercio,tokens,notificacion,image){
   var registrationToken = tokens;
   var payload = {
     notification: {
       title: "Nueva Promoción",
       body: `${comercio} ${notificacion}.`,
-      icon:"https://poomapp.com/assets/image/logo_poom_naranja.svg"
+      image:`https://api.poomapp.com/${image}`
     }
   }
   admin.messaging().sendToDevice(registrationToken, payload)
