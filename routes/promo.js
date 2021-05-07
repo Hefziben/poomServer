@@ -224,7 +224,7 @@ function postNotification(prom,tokens,notificacion,image){
       metodo:prom.metodo,
       telefono:prom.telefono,
       notificacion:prom.notificacion,
-      ubicacion: [{lat:Number(prom.lat),lng:Number(prom.lng)}],
+      ubicacion: JSON.stringify([{lat:Number(prom.lat),lng:Number(prom.lng)}]),
       imagen: `https://api.poomapp.com/${image}`,
     }
   }
