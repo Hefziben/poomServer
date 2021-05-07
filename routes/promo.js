@@ -213,7 +213,7 @@ function postNotification(comercio,tokens,notificacion,image){
   var payload = {
     notification: {
       title: "Nueva Promoción",
-      body: `${comercio} ${notificacion}.`,
+      body: `${notificacion}.`,
       image:`https://api.poomapp.com/${image}`
     }
   }
