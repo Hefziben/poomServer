@@ -64,6 +64,7 @@ crearPromo.save((err, nuevo_Promo) => {
     res.send(errMsj);
   } else {
     Usuarios.find({'intereses.name':promo.categoria}, (err, usuarios) => {
+      console.log(usuarios);
       if (res.status == 400) {
         res.send({ mensaje: "error en la petición", res: status, err });
       } else {
