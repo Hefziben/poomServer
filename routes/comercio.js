@@ -24,7 +24,7 @@ router.get("/", function (req, res, next) {
       res.send({ mensaje: "error en la petición", res: status, err });
     } else {
       res.send(comercios);
-    }s
+    }
   });
 });
 
