@@ -24,7 +24,7 @@ router.get("/", function (req, res, next) {
       res.send({ mensaje: "error en la petición", res: status, err });
     } else {
       res.send(comercios);
-    }
+    }s
   });
 });
 
@@ -96,23 +96,13 @@ router.post("/", (req, res) => {
 });
 //get comercio by ID
 router.get("/:id", (req, res) => {
-  const authHeader = req.headers.authorization;
-  if (authHeader) {
-    const token = authHeader.split(" ")[1];
-    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-      if (err) {
-        return res.sendStatus(403);
-      }
       //process request
       var id = req.params.id;
       Comercio.findOne({ $or: [{ "promociones.codigo": id }, { _id: id }] })
         .exec()
         .then((data) => res.status(200).send(data))
         .catch((err) => res.status(400).send(err));
-    });
-  } else {
-    res.sendStatus(401);
-  }
+  const authHeader = req.headers.authorization;
 });
 
 //Update Comercio
@@ -123,17 +113,6 @@ router.put("/:id", (req, res) => {
   Comercio.findByIdAndUpdate(comercioId, { $set: req.body }, { new: true })
     .then((data) => res.status(200).send("Actualizado"))
     .catch((err) => res.status(400).send(err));
-  // const authHeader = req.headers.authorization;
-  // if (authHeader) {
-  //   const token = authHeader.split(' ')[1];
-  //   jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-  //     if (err) {
-  //         return res.sendStatus(403);
-  //     }
-  // });
-  // } else {
-  //   res.sendStatus(401);
-  // }
 });
 
 //Update message with file
