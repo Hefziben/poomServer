@@ -14,6 +14,7 @@ const userSchema = new Schema(
     nacimiento:{ type: String },
     telefono:{ type: String }, 
     msgToken: { type: String, default:null},   
+    otp:{ type: String, default:''},
     cupones:[{
         id:{ type: String },
         imagen:{ type: String },
