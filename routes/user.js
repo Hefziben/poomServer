@@ -60,9 +60,9 @@ router.post("/verify/", function(req, res, next) {
       res.send({ mensaje: "error in get request", res: err });
     } else {
       if(data){
-              res.send('usario existe');
+              res.send({ mensaje: "usuario existe", user: data });
 } else{
-                res.send('usario no existe');
+                res.send({ mensaje: "usuario no existe"});
 }
 
     }
