@@ -73,7 +73,7 @@ router.put("/:id", (req, res) => {
   const userId = req.params.id;
 User.findByIdAndUpdate(userId, { $set: req.body }, { new: true })
   .then(data => res.status(200).send(data))
-  .catch(err => res.status(400).send(err));     
+  .catch(err => res.status(400).send(null));     
   // const authHeader = req.headers.authorization;
   // if (authHeader) {
   //   const token = authHeader.split(' ')[1];
@@ -178,6 +178,7 @@ User.findByIdAndDelete(userId)
   }
 
 });
+
 
 
 module.exports = router;
