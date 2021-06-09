@@ -45,6 +45,7 @@ router.post("/", upload.single("file_path"), (req, res) => {
   //process request  
 const file = req.file;
 const promo = req.body;
+console.log(promo);
 const nuevaPromo = {
   comercio: promo.comercio,
   validez: promo.validez,
@@ -56,9 +57,11 @@ const nuevaPromo = {
   ubicacion: [{lat:Number(promo.lat),lng:Number(promo.lng)}],
   imagen: file.path,
      };
+     console.log(nuevaPromo);
 const crearPromo = new Promo(nuevaPromo);
 crearPromo.save((err, nuevo_Promo) => {
   if (err) {
+    console.log(err);
     errMsj = err.message;
 
     res.send(errMsj);
