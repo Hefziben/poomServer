@@ -67,7 +67,6 @@ crearPromo.save((err, nuevo_Promo) => {
     res.send(errMsj);
   } else {
     Usuarios.find({'intereses.name':promo.categoria}, (err, usuarios) => {
-      console.log(usuarios);
       if (res.status == 400) {
         res.send({ mensaje: "error en la petición", res: status, err });
       } else {
@@ -213,8 +212,8 @@ Promo.findByIdAndDelete(messageId)
 });
 
 function postNotification(prom,tokens,notificacion,image){
-  var token = "d-g40y0PRN288p-_JFej4e:APA91bGNJhK9JwT_X2fJHDYs3TSmyjScefqpnK_1YGgM1bxAZkgw7CTkpkzfzLJgbRxhSLQtf-RSttc-SG75sWGx--Mgd-7BFyEtoQPV03m2G65fNGMdqCg3H2tTGwAKRqQUUc40jiCf"
-  var registrationToken = tokens;
+  var token = "d-g40y0PRN288p-_JFej4e:APA91bGNJhK9JwT_X2fJHDYs3TSmyjScefqpnK_1YGgM1bxAZkgw7CTkpkzfzLJgbRxhSLQtf-RSttc-SG75sWGx--Mgd-7BFyEtoQPV03m2G65fNGMdqCg3H2tTGwAKRqQUUc40jiCf";
+  var registrationToken = token;
   var payload = {
     notification: {
       title: "Nueva Promoción",
@@ -234,7 +233,7 @@ function postNotification(prom,tokens,notificacion,image){
       imagen: `https://api.poomapp.com/${image}`,
     }
   }
-  admin.messaging().sendToDevice(token, payload)
+  admin.messaging().sendToDevice(registrationToken, payload)
   .then(function(response) {
     console.log("Successfully sent message:", response);
   })
