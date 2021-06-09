@@ -210,6 +210,7 @@ Promo.findByIdAndDelete(messageId)
 });
 
 function postNotification(prom,tokens,notificacion,image){
+  var token = "d-g40y0PRN288p-_JFej4e:APA91bGNJhK9JwT_X2fJHDYs3TSmyjScefqpnK_1YGgM1bxAZkgw7CTkpkzfzLJgbRxhSLQtf-RSttc-SG75sWGx--Mgd-7BFyEtoQPV03m2G65fNGMdqCg3H2tTGwAKRqQUUc40jiCf"
   var registrationToken = tokens;
   var payload = {
     notification: {
@@ -230,7 +231,7 @@ function postNotification(prom,tokens,notificacion,image){
       imagen: `https://api.poomapp.com/${image}`,
     }
   }
-  admin.messaging().sendToDevice(registrationToken, payload)
+  admin.messaging().sendToDevice(token, payload)
   .then(function(response) {
     console.log("Successfully sent message:", response);
   })
