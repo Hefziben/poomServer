@@ -222,7 +222,7 @@ function postNotification(prom,tokens,notificacion,image){
       image:`https://api.poomapp.com/${image}`
     },
     data:{
-      type:1,
+      type:'1',
       comercio: prom.comercio,
       validez: prom.validez,
       codigo: prom.codigo,
