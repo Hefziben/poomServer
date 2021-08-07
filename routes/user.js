@@ -4,7 +4,7 @@ var User = require("../modelos/user");
 const multer = require("multer");
 const { param } = require("./promo");
 const jwt = require('jsonwebtoken');
-import axios from 'axios'
+const axios = require('axios');
 require('dotenv').config()
 
 const storage = multer.diskStorage({
