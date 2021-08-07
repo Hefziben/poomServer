@@ -225,8 +225,10 @@ const config = {
   },
 };
 console.log(config);
-res.send(config);
-//return axios(config);
+//res.send(config);
+return axios(config).then(respuesta =>{
+  req.res(respuesta);
+});
       }
 
 
