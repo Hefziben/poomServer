@@ -4,6 +4,7 @@ var User = require("../modelos/user");
 const multer = require("multer");
 const { param } = require("./promo");
 const jwt = require('jsonwebtoken');
+import axios from 'axios'
 require('dotenv').config()
 
 const storage = multer.diskStorage({
@@ -169,6 +170,62 @@ const userId = req.params.id;
 User.findByIdAndDelete(userId)
   .then(data => res.status(200).send(data))
   .catch(err => res.status(400).send(err));        
+      }
+
+
+  });
+  } else {
+    res.sendStatus(401);
+  }
+
+});
+
+//delete User
+router.post("/makePayment", (req, res) => {
+  const body = req.body
+  const authHeader = req.headers.authorization;
+  if (authHeader) {
+    const token = authHeader.split(' ')[1];
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+      if (err) {
+          return res.sendStatus(403);
+      }
+      if (user.role == "User") {
+//process request
+const config = {
+  method: "post",
+  url: process.env.gatewayUrl,
+  options: {
+    Auth: {
+      ApiKey: process.env.ApiKey,
+    },
+
+    Transactions: {
+      TransactionType: "sale",
+
+      Amount: body.amount,
+    },
+
+    Payment: {
+      BillingCCNumber:body.cardNumber,
+
+      BillingCCExp: card.expiration,
+
+      BillingCvv: card.secret,
+
+      BillingFirstName: card.name,
+
+      BillingLastName: card.lastname,
+
+      BillingCCType: "Visa",
+    },
+  },
+  headers: {
+    "Content-Type": "application/json"
+  },
+};
+console.log(config);
+//return axios(config);
       }
 
 
