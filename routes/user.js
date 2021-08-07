@@ -225,6 +225,7 @@ const config = {
   },
 };
 console.log(config);
+res.send(config);
 //return axios(config);
       }
 
