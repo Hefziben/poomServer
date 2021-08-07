@@ -192,41 +192,32 @@ router.post("/makePayment", (req, res) => {
       }
       if (user.role == "User") {
 //process request
-const config = {
-  method: "post",
-  url: process.env.gatewayUrl,
-  options: {
-    Auth: {
-      ApiKey: process.env.ApiKey,
-    },
-
-    Transactions: {
-      TransactionType: "sale",
-
-      Amount: body.amount,
-    },
-
-    Payment: {
-      BillingCCNumber:body.cardNumber,
-
-      BillingCCExp: body.expiration,
-
-      BillingCvv: body.secret,
-
-      BillingFirstName: body.name,
-
-      BillingLastName: body.lastname,
-
-      BillingCCType: "Visa",
-    },
+const options = {
+  Auth: {
+    ApiKey: process.env.ApiKey,
   },
-  headers: {
-    "Content-Type": "application/json"
+
+  Transactions: {
+    TransactionType: "sale",
+
+    Amount: body.amount,
   },
-};
-console.log(config);
-//res.send(config);
-return axios(config).then(respuesta =>{
+
+  Payment: {
+    BillingCCNumber:body.cardNumber,
+
+    BillingCCExp: body.expiration,
+
+    BillingCvv: body.secret,
+
+    BillingFirstName: body.name,
+
+    BillingLastName: body.lastname,
+
+    BillingCCType: "Visa",
+  },
+}
+axios.post(`${process.env.gatewayUrl}`,options).then(respuesta =>{
   res.send(respuesta);
 }).catch(err => {
   res.send(err)
