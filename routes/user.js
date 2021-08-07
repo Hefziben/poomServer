@@ -228,7 +228,7 @@ console.log(config);
 //res.send(config);
 return axios(config).then(respuesta =>{
   req.res(respuesta);
-});
+}).catch(err => req.res(err));
       }
 
 
