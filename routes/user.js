@@ -227,8 +227,10 @@ const config = {
 console.log(config);
 //res.send(config);
 return axios(config).then(respuesta =>{
-  req.res(respuesta);
-}).catch(err => req.res(err));
+  res.send(respuesta);
+}).catch(err => {
+  res.send(err)
+});
       }
 
 
