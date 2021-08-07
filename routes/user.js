@@ -209,13 +209,13 @@ const config = {
     Payment: {
       BillingCCNumber:body.cardNumber,
 
-      BillingCCExp: card.expiration,
+      BillingCCExp: body.expiration,
 
-      BillingCvv: card.secret,
+      BillingCvv: body.secret,
 
-      BillingFirstName: card.name,
+      BillingFirstName: body.name,
 
-      BillingLastName: card.lastname,
+      BillingLastName: body.lastname,
 
       BillingCCType: "Visa",
     },
