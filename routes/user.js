@@ -197,11 +197,13 @@ const options = {
     ApiKey: process.env.ApiKey,
   },
 
-  Transactions: {
-    TransactionType: "sale",
-
-    Amount: body.amount,
-  },
+  Transactions: [
+    {
+      TransactionType: "sale",
+  
+      Amount: body.amount
+    }
+  ],
 
   Payment: {
     BillingCCNumber:body.cardNumber,
