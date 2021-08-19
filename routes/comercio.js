@@ -126,7 +126,7 @@ router.get("/:id", (req, res) => {
         .exec()
         .then((data) => res.status(200).send(data))
         .catch((err) => res.status(400).send(err));
-  const authHeader = req.headers.authorization;
+  
 });
 
 //Update Comercio
@@ -135,7 +135,7 @@ router.put("/:id", (req, res) => {
   console.log(comercioId);
 
   Comercio.findByIdAndUpdate(comercioId, { $set: req.body }, { new: true })
-    .then((data) => res.status(200).send("Actualizado"))
+    .then((data) => res.status(200).send({mensaje:"Actualizado",update:data}))
     .catch((err) => res.status(400).send(err));
 });
 
