@@ -67,6 +67,30 @@ router.post("/crear", upload.single("file_path"), (req, res) => {
     res.sendStatus(401);
   }
 });
+//añadir producto a comercio 
+router.post("/producto", upload.single("file_path"), (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (authHeader) {
+    const token = authHeader.split(" ")[1];
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+      //process request
+      const file = req.file;
+      const producto = JSON.parse(req.body.producto);
+      const comercio = JSON.parse(req.body.comercio);
+      producto.imagen = `https://api.poomapp.com/${file.filename}`;
+      comercio.productos.push(producto);
+      console.log(nuevoProducto);
+      Comercio.findByIdAndUpdate(comercio._id, { $set: comercio }, { new: true })
+      .then((data) => res.status(200).send("Producto añadido"))
+      .catch((err) => res.status(400).send(err));
+    });
+  } else {
+    res.sendStatus(401);
+  }
+});
 
 //add comercio
 router.post("/", (req, res) => {

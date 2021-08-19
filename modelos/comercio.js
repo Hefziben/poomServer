@@ -21,6 +21,8 @@ const comercioSchema = new Schema(
         {
             nombre:{ type: String },
             precio:{ type: String },
+            imagen:{ type: String },
+            categoria:{ type: String },
             descripcion:{ type: String },
             disponible:{ type: Boolean, default:true },
             envio:{ type: Boolean, default:true }            
