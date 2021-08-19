@@ -18,6 +18,6 @@ const ordenSchema = new Schema(
         metodo:{ type: String },
 }]);
 
-const Orden = mongoose.model('Orden', comercioSchema);
+const Orden = mongoose.model('Orden', ordenSchema);
 
 module.exports = Orden;
