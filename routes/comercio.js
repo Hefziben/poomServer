@@ -81,8 +81,8 @@ router.post("/producto", upload.single("file_path"), (req, res) => {
       const producto = JSON.parse(req.body.producto);
       const comercio = JSON.parse(req.body.comercio);
       producto.imagen = `https://api.poomapp.com/${file.filename}`;
+      console.log(producto);
       comercio.productos.push(producto);
-      console.log(nuevoProducto);
       Comercio.findByIdAndUpdate(comercio._id, { $set: comercio }, { new: true })
       .then((data) => res.status(200).send("Producto añadido"))
       .catch((err) => res.status(400).send(err));
