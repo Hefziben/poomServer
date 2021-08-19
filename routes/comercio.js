@@ -80,7 +80,7 @@ router.post("/producto", upload.single("file_path"), (req, res) => {
       const file = req.file;
       const producto = JSON.parse(req.body.producto);
       const comercio = JSON.parse(req.body.comercio);
-      producto.imagen = `https://api.poomapp.com/${file.filename}`;
+      producto.imagen = `https://api.poomapp.com/uploads/${file.filename}`;
       console.log(producto);
       comercio.productos.push(producto);
       Comercio.findByIdAndUpdate(comercio._id, { $set: comercio }, { new: true })
