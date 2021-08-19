@@ -8,6 +8,7 @@ require("./database");
 
 var indexRouter = require('./routes/index');
 var comercioRouter = require('./routes/comercio');
+var ordenRouter = require('./routes/orden');
 var userRouter = require('./routes/user');
 var promoRouter = require('./routes/promo');
 var interesRouter = require('./routes/interes');
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads',express.static(path.join(__dirname, 'uploads')));
 app.use('/', indexRouter);
 app.use('/comercio', comercioRouter);
+app.use('/orden', ordenRouter);
 app.use('/user', userRouter);
 app.use('/promo', promoRouter);
 app.use('/interes', interesRouter);

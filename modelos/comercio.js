@@ -17,6 +17,15 @@ const comercioSchema = new Schema(
             codigo:{ type: String }
         }
     ],
+    productos:[
+        {
+            nombre:{ type: String },
+            precio:{ type: String },
+            descripcion:{ type: String },
+            disponible:{ type: Boolean, default:true },
+            envio:{ type: Boolean, default:true }            
+        }
+    ],
     canjes:[
         {
             promoId:{ type: String },
@@ -24,7 +33,24 @@ const comercioSchema = new Schema(
             fecha:{ type: String },
         }
     ],
+    ventas:[
+        {   orden_id:{ type: String },
+            productoId:{ type: String },
+            usurioId:{ type: String },
+          //comercioId:{ type: String },
+            fecha:{ type: String },
+            estado:{ type: String },
+            confirmada:{ type: Boolean},
+            total:{ type: String },
+            ganancia:{ type: String },
+            pagado:{ type: String },
+            metodo:{ type: String },
+          //impuestos:{ type: String },
+        }
+    ],
     imagen: { type: String },
+    isShop:{type:Boolean, default:false},
+    isShopActive:{type:Boolean, default:false},
     email:{ type: String },
     website:{ type: String },
     telefono:{ type: String }

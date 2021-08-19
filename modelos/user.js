@@ -21,6 +21,19 @@ const userSchema = new Schema(
         categoria:{ type: String },
         cangeado:{ type: Boolean},        
     }],
+    compras:[
+        {   orden_id:{ type: String },
+            productoId:{ type: String },
+            comercioId:{ type: String },
+            fecha:{ type: String },
+            estado:{ type: String },
+            confirmada:{ type: Boolean},
+            sub_total:{ type: String },
+            envio:{ type: String },
+            total:{ type: String },
+            metodo:{ type: String },
+        }
+    ],
     intereses:[{
         name:{ type: String },
         selected:{ type: Boolean }        
