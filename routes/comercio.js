@@ -84,7 +84,7 @@ router.post("/producto", upload.single("file_path"), (req, res) => {
       console.log(producto);
       comercio.productos.push(producto);
       Comercio.findByIdAndUpdate(comercio._id, { $set: comercio }, { new: true })
-      .then((data) => res.status(200).send("Producto añadido"))
+      .then((data) => res.status(200).send({mensaje:"Producto añadido",resp:data}))
       .catch((err) => res.status(400).send(err));
     });
   } else {
