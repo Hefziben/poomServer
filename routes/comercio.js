@@ -107,17 +107,18 @@ router.post("/producto_update", upload.single("file_path"), (req, res) => {
        let comercio = JSON.parse(req.body.comercio);
        producto.imagen = `https://api.poomapp.com/uploads/${file.filename}`;
        console.log(producto);
+       let newArray = [];
       for (let i = 0; i < comercio.productos.length; i++) {
         let el = comercio.productos[i];
         if (el._id == producto._id) {
-          el = producto;
-          console.log(el);
-          console.log(comercio.productos);
+          newArray.push(producto);
+        } else{
+          newArray.push(el)
         }
         
       }
       
-      Comercio.findByIdAndUpdate({"_id":comercio._id,"productos._id": producto._id }, { $set:{ "productos" : producto }}, { new: true })
+      Comercio.findByIdAndUpdate({"_id":comercio._id,"productos._id": producto._id }, { $set:{ "productos" : newArray }}, { new: true })
       .then((data) => res.status(200).send({mensaje:"Producto actuslizado",resp:data}))
       .catch((err) => res.status(400).send(err));
     });
