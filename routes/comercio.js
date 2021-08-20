@@ -92,6 +92,36 @@ router.post("/producto", upload.single("file_path"), (req, res) => {
   }
 });
 
+//actualizar producto en comercio 
+router.post("/producto_update", upload.single("file_path"), (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (authHeader) {
+    const token = authHeader.split(" ")[1];
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+      //process request
+      const file = req.file;
+      let producto = JSON.parse(req.body.producto);
+      let comercio = JSON.parse(req.body.comercio);
+      producto.imagen = `https://api.poomapp.com/uploads/${file.filename}`;
+      for (let i = 0; i < comercio.productos.length; i++) {
+        let el = comercio.productos[i];
+        if (el._id == producto._id) {
+          el = producto;
+          console.log(el);
+        }
+        
+      }
+      Comercio.findByIdAndUpdate(comercio._id, { $set: comercio }, { new: true })
+      .then((data) => res.status(200).send({mensaje:"Producto actuslizado",resp:data}))
+      .catch((err) => res.status(400).send(err));
+    });
+  } else {
+    res.sendStatus(401);
+  }
+});
 //add comercio
 router.post("/", (req, res) => {
   const authHeader = req.headers.authorization;
