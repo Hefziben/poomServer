@@ -105,11 +105,12 @@ router.post("/producto_update", upload.single("file_path"), (req, res) => {
       const file = req.file;
       let producto = JSON.parse(req.body.producto);
        let comercio = JSON.parse(req.body.comercio);
+       producto.imagen = `https://api.poomapp.com/uploads/${file.filename}`;
+       console.log(producto);
       for (let i = 0; i < comercio.productos.length; i++) {
         let el = comercio.productos[i];
         if (el._id == producto._id) {
           el = producto;
-          el.imagen = `https://api.poomapp.com/uploads/${file.filename}`;
           console.log(el);
           console.log(comercio.productos);
         }
