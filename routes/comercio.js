@@ -114,6 +114,8 @@ router.post("/producto_update", upload.single("file_path"), (req, res) => {
         }
         
       }
+      console.log(comercio);
+      return
       Comercio.findByIdAndUpdate(comercio._id, { $set: comercio }, { new: true })
       .then((data) => res.status(200).send({mensaje:"Producto actuslizado",resp:data}))
       .catch((err) => res.status(400).send(err));
