@@ -25,7 +25,7 @@ const comercioSchema = new Schema(
             categoria:{ type: String },
             descripcion:{ type: String },
             disponible:{ type: Boolean, default:true },
-            cantitad:{ type: Number, default:0 },
+            cantidad:{ type: Number, default:0 },
             envio:{ type: Boolean, default:true },  
             ventas:{ type: Number, default:0 }          
         }
