@@ -39,27 +39,18 @@ router.post("/crear", upload.single("file_path"), (req, res) => {
       }
       //process request
       const file = req.file;
-      const comercio = req.body;
-      const nuevoComercio = {
-        nombre: comercio.nombre,
-        tipo: comercio.tipo,
-        ubicacion: comercio.ubicacion,
-        planActivo: comercio.planActivo,
-        imagen: file.path,
-        promociones: comercio.promociones,
-        email: comercio.email,
-        website: comercio.website,
-        telefono: comercio.telefono,
-      };
-      console.log(nuevoComercio);
-      const crearComercio = new Comercio(nuevoComercio);
+      let comercio = JSON.parse(req.body.comercio);
+      comercio.imagen = `https://api.poomapp.com/uploads/${file.filename}`;
+  
+      console.log(comercio);
+      const crearComercio = new Comercio(comercio);
       crearComercio.save((err, nuevo_Comercio) => {
         if (err) {
           errMsj = err.message;
 
           res.send(errMsj);
         } else {
-          res.send("Comercio guardado con exito");
+          res.send({mensaje:"Comercio guardado con exito",resp:data});
         }
       });
     });
