@@ -50,7 +50,7 @@ router.post("/crear", upload.single("file_path"), (req, res) => {
 
           res.send(errMsj);
         } else {
-          res.send({mensaje:"Comercio guardado con exito",resp:data});
+          res.send({mensaje:"Comercio guardado con exito",resp:nuevo_Comercio});
         }
       });
     });
