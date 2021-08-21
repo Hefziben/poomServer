@@ -173,7 +173,7 @@ router.put("/:id", (req, res) => {
     .catch((err) => res.status(400).send(err));
 });
 
-//Update message with file
+//Update comercio with file
 router.put("/file/:id", upload.single("file_path"), (req, res) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
@@ -189,7 +189,7 @@ router.put("/file/:id", upload.single("file_path"), (req, res) => {
       console.log(file);
 
       const comercio = req.body;
-      comercio.imagen =  `https://api.poomapp.com/uploads/${file.filename}`;
+      comercio.imagen = `https://api.poomapp.com/uploads/${file.filename}`;
  
       console.log(comercio);
       Comercio.findByIdAndUpdate(comercioId, { $set: comercio }, { new: true })
