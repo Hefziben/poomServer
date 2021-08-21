@@ -55,7 +55,7 @@ const comercioSchema = new Schema(
     ],
     cantidadventas:{ type: Number, default:0 },    
     imagen: { type: String },
-    provincia:{ type: String },
+    provincia:{ type: String,default:'Panamá'},
     isShop:{type:Boolean, default:false},
     isShopActive:{type:Boolean, default:false},
     email:{ type: String },
