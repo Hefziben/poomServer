@@ -52,7 +52,7 @@ const comercioSchema = new Schema(
           //impuestos:{ type: String },
         }
     ],
-    Cantidadventas:{ type: Number, default:0 },    
+    cantidadventas:{ type: Number, default:0 },    
     imagen: { type: String },
     isShop:{type:Boolean, default:false},
     isShopActive:{type:Boolean, default:false},
