@@ -189,22 +189,11 @@ router.put("/file/:id", upload.single("file_path"), (req, res) => {
       console.log(file);
 
       const comercio = req.body;
-      console.log(comercioId);
-      const update = {
-        nombre: comercio.nombre,
-        tipo: comercio.tipo,
-        ubicacion: comercio.ubicacion,
-        planActivo: comercio.planActivo,
-        imagen: file.path,
-        promociones: comercio.promociones,
-        email: comercio.email,
-        website: comercio.website,
-        telefono: comercio.telefono,
-      };
+      comercio.imagen =  `https://api.poomapp.com/uploads/${file.filename}`;
+ 
       console.log(comercio);
-
-      Comercio.findByIdAndUpdate(comercioId, { $set: update }, { new: true })
-        .then((data) => res.status(200).send("comercio actualizado"))
+      Comercio.findByIdAndUpdate(comercioId, { $set: comercio }, { new: true })
+        .then((data) => res.status(200).send({mensaje:"comercio actualizado",resp:data}))
         .catch((err) => res.status(400).send(err));
     });
   } else {
