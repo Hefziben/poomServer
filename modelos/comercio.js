@@ -27,7 +27,8 @@ const comercioSchema = new Schema(
             disponible:{ type: Boolean, default:true },
             cantidad:{ type: Number, default:0 },
             envio:{ type: Boolean, default:true },  
-            ventas:{ type: Number, default:0 }          
+            ventas:{ type: Number, default:0 },
+            calificacion:{ type: Number, default:0 },         
         }
     ],
     canjes:[
