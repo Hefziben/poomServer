@@ -188,7 +188,7 @@ router.put("/file/:id", upload.single("file_path"), (req, res) => {
       const file = req.file;
       console.log(file);
 
-      const comercio = req.body;
+      let comercio = JSON.parse(req.body.comercio);
       comercio.imagen = `https://api.poomapp.com/uploads/${file.filename}`;
  
       console.log(comercio);
