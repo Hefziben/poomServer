@@ -21,6 +21,7 @@ const comercioSchema = new Schema(
         {
             nombre:{ type: String },
             precio:{ type: String },
+            extras:{ type: Number, default:0 },
             imagen:{ type: String },
             categoria:{ type: String },
             descripcion:{ type: String },
@@ -40,17 +41,15 @@ const comercioSchema = new Schema(
     ],
     ventas:[
         {   orden_id:{ type: String },
-            productoId:{ type: String },
-            usurioId:{ type: String },
-          //comercioId:{ type: String },
+            productos:[],
+            usurioId:{ type: String },         
             fecha:{ type: String },
             estado:{ type: String },
-            confirmada:{ type: Boolean},
             total:{ type: String },
             ganancia:{ type: String },
             pagado:{ type: String },
             metodo:{ type: String },
-          //impuestos:{ type: String },
+         
         }
     ],
     cantidadventas:{ type: Number, default:0 },    

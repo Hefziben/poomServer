@@ -23,11 +23,10 @@ const userSchema = new Schema(
     }],
     compras:[
         {   orden_id:{ type: String },
-            productoId:{ type: String },
+            productos:[],
             comercioId:{ type: String },
             fecha:{ type: String },
             estado:{ type: String },
-            confirmada:{ type: Boolean},
             sub_total:{ type: String },
             envio:{ type: String },
             total:{ type: String },

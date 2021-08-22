@@ -60,7 +60,7 @@ router.post("/", (req, res) => {
 router.get("/:id", (req, res) => {
       //process request
       var id = req.params.id;
-      Orden.findOne({ $or: [{ "promociones.codigo": id }, { _id: id }] })
+      Orden.findOne({ $or: [{ "orden.comercioId": id }, { "orden.usurioId": id }, { _id: id }] })
         .exec()
         .then((data) => res.status(200).send(data))
         .catch((err) => res.status(400).send(err));
