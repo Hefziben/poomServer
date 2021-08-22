@@ -7,8 +7,7 @@ const ordenSchema = new Schema(
         usurioId:{ type: String },
         comercioId:{ type: String },
         fecha:{ type: String },
-        estado:{ type: String },
-        confirmada:{ type: Boolean},
+        estado:{ type: String }, //1. en proceso, 2. confirmada , 3.entregada. 
         sub_total:{ type: String },
             envio:{ type: String },
             total:{ type: String },
