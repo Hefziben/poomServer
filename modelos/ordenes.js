@@ -12,7 +12,8 @@ const ordenSchema = new Schema(
             envio:{ type: String },
             total:{ type: String },
         ganancia:{ type: String },
-        pagado:{ type: String },
+        cargos:{ type: String },
+        pagar:{ type: String },
         impuestos:{ type: String },
         metodo:{ type: String },
 }]);
