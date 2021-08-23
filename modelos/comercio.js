@@ -46,9 +46,9 @@ const comercioSchema = new Schema(
             usurioId:{ type: String },         
             fecha:{ type: String },
             estado:{ type: String },
+            sub_total:{ type: String },
             total:{ type: String },
             ganancia:{ type: String },
-            pagado:{ type: String },
             metodo:{ type: String },
          
         }
