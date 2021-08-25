@@ -24,7 +24,7 @@ const userSchema = new Schema(
     compras:[
         {   orden_id:{ type: String },
             productos:[],
-            comercioId:{ type: String },
+            comercio:{ type: Schema.Types.Mixed },
             fecha:{ type: String },
             estado:{ type: String },
             sub_total:{ type: String },

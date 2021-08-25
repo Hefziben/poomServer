@@ -43,7 +43,7 @@ const comercioSchema = new Schema(
     ventas:[
         {   orden_id:{ type: String },
             productos:[],
-            usurioId:{ type: String },         
+            usuario:{ type: Schema.Types.Mixed },         
             fecha:{ type: String },
             estado:{ type: String },
             sub_total:{ type: String },
