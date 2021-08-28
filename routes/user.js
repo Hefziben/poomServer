@@ -231,7 +231,7 @@ res.send(response);
     res.sendStatus(401);
   }
 
-});
+}));
 
 
 
