@@ -5,6 +5,8 @@ const multer = require("multer");
 const { param } = require("./promo");
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
+const asyncHandler = require('express-async-handler')
+
 require('dotenv').config()
 
 const storage = multer.diskStorage({
@@ -181,7 +183,7 @@ User.findByIdAndDelete(userId)
 });
 
 //delete User
- router.post("/makePayment", async (req, res) => {
+ router.post("/makePayment", asyncHandler(async(req, res) => {
   const body = req.body
   const authHeader = req.headers.authorization;
   if (authHeader) {
