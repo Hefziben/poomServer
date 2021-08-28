@@ -183,7 +183,7 @@ User.findByIdAndDelete(userId)
 });
 
 //delete User
- router.post("/makePayment", asyncHandler(async(req, res) => {
+ router.post("/makePayment", (req, res) => {
   const body = req.body
   const authHeader = req.headers.authorization;
   if (authHeader) {
@@ -221,7 +221,7 @@ const options = {
     BillingCCType: "Visa",
   },
 }
-const response = await axios.post(`${process.env.gatewayUrl}`,options);
+const response = axios.post(`${process.env.gatewayUrl}`,options);
 res.send(response);
       }
 
@@ -231,7 +231,7 @@ res.send(response);
     res.sendStatus(401);
   }
 
-}));
+});
 
 
 
