@@ -22,7 +22,8 @@ const userSchema = new Schema(
         cangeado:{ type: Boolean},        
     }],
     compras:[
-        {   orden_id:{ type: String },
+        {   ordenNumero:{ type: String },
+            orden_id:{ type: String },
             productos:[],
             comercio:{ type: Schema.Types.Mixed },
             fecha:{ type: String },
@@ -31,6 +32,7 @@ const userSchema = new Schema(
             envio:{ type: String },
             total:{ type: String },
             metodo:{ type: String },
+            verificador:{ type: String },
         }
     ],
     intereses:[{

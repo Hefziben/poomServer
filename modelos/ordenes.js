@@ -3,6 +3,7 @@ const Schema  = mongoose.Schema;
 
 const ordenSchema = new Schema(
     [{
+        ordenNumero:{ type: String },
         productos:[],
         usuario:{ type: String },
         comercio:{ type: String },
@@ -16,6 +17,9 @@ const ordenSchema = new Schema(
         pagar:{ type: String },
         impuestos:{ type: String },
         metodo:{ type: String },
+        comprobante:{ type: String },
+        comentarios:{ type: String,default:''},
+        verificador:{ type: String },
 }]);
 
 const Orden = mongoose.model('Orden', ordenSchema);

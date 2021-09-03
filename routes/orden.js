@@ -56,6 +56,34 @@ router.post("/", (req, res) => {
     res.sendStatus(401);
   }
 });
+//add orden with file
+router.post("/file", upload.single("file_path"), (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (authHeader) {
+    const token = authHeader.split(" ")[1];
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+      //process request
+      const file = req.file;
+      let orden = JSON.parse(req.body.orden);
+      orden.comprobante = `https://api.poomapp.com/uploads/${file.filename}`;
+      const crearOrden = new Orden(orden);
+      crearOrden.save((err, nueva_orden) => {
+        if (err) {
+          errMsj = err.message;
+
+          res.send(errMsj);
+        } else {
+          res.send({mensaje:"Comercio guardado con exito",resp:nueva_orden});
+        }
+      });
+    });
+  } else {
+    res.sendStatus(401);
+  }
+});
 //get orden by ID
 router.get("/:id", (req, res) => {
       //process request
@@ -75,6 +103,35 @@ router.put("/:id", (req, res) => {
   Orden.findByIdAndUpdate(ordenId, { $set: req.body }, { new: true })
     .then((data) => res.status(200).send("Actualizado"))
     .catch((err) => res.status(400).send(err));
+});
+
+
+//Update orden with file
+router.put("/file/:id", upload.single("file_path"), (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (authHeader) {
+    const token = authHeader.split(" ")[1];
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+
+      //process request
+      const ordenId = req.params.id;
+      const file = req.file;
+      console.log(file);
+
+      let orden = JSON.parse(req.body.orden);
+      orden.imagen = `https://api.poomapp.com/uploads/${file.filename}`;
+ 
+      console.log(orden);
+      Orden.findByIdAndUpdate(ordenId, { $set: orden }, { new: true })
+        .then((data) => res.status(200).send({mensaje:"orden actualizada",resp:data}))
+        .catch((err) => res.status(400).send(err));
+    });
+  } else {
+    res.sendStatus(401);
+  }
 });
 
 
