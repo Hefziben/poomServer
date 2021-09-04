@@ -34,6 +34,7 @@ const userSchema = new Schema(
             metodo:{ type: String },
             verificador:{ type: String },
             transaccion:{ type: String },
+            comprobante:{ type: String },
             comentarios:[],
         }
     ],
