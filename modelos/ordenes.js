@@ -5,8 +5,8 @@ const ordenSchema = new Schema(
     [{
         ordenNumero:{ type: String },
         productos:[],
-        usuario:{ type: String },
-        comercio:{ type: String },
+        usuario:{ type: Schema.Types.Mixed },
+        comercio:{ type: Schema.Types.Mixed },
         fecha:{ type: String },
         estado:{ type: String }, //1. en proceso, 2. confirmada , 3.entregada. 
         sub_total:{ type: String },
