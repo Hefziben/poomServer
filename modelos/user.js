@@ -33,6 +33,8 @@ const userSchema = new Schema(
             total:{ type: String },
             metodo:{ type: String },
             verificador:{ type: String },
+            transaccion:{ type: String },
+            comentarios:[],
         }
     ],
     intereses:[{

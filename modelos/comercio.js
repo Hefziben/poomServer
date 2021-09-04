@@ -51,6 +51,8 @@ const comercioSchema = new Schema(
             total:{ type: String },
             ganancia:{ type: String },
             metodo:{ type: String },
+            transaccion:{ type: String },
+            comentarios:[],
          
         }
     ],

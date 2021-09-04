@@ -18,7 +18,8 @@ const ordenSchema = new Schema(
         impuestos:{ type: String },
         metodo:{ type: String },
         comprobante:{ type: String },
-        comentarios:{ type: String,default:''},
+        transaccion:{ type: String },
+        comentarios:[],
         verificador:{ type: String },
 }]);
 
