@@ -19,7 +19,9 @@ const ordenSchema = new Schema(
         metodo:{ type: String },
         comprobante:{ type: String },
         transaccion:{ type: String },
-        comentarios:[],
+        comentarios:[{
+            nota:{ type: String }
+        }],
         verificador:{ type: String },
 }]);
 
