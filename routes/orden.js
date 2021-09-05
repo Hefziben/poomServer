@@ -69,7 +69,9 @@ router.post("/file", upload.single("file_path"), (req, res) => {
       const file = req.file;
       console.log(file);
       let orden = JSON.parse(req.body.orden);
-      orden.comprobante = `https://api.poomapp.com/uploads/${file.filename}`;
+      orden.comprobante = `https://api.poomapp.com/${file.path}`;
+      console.log('comprobante',orden.comprobante);
+      return
       const crearOrden = new Orden(orden);
       crearOrden.save((err, nueva_orden) => {
         if (err) {
