@@ -128,7 +128,7 @@ router.put("/file/:id", upload.single("file_path"), (req, res) => {
  
       console.log(orden);
       Orden.findByIdAndUpdate(ordenId, { $set: orden }, { new: true })
-        .then((data) => res.status(200).send({mensaje:"orden actualizada",resp:data}))
+        .then((respuesta) => res.status(200).send({mensaje:"orden actualizada",resp:respuesta}))
         .catch((err) => res.status(400).send(err));
     });
   } else {
