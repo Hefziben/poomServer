@@ -124,7 +124,7 @@ router.put("/file/:id", upload.single("file_path"), (req, res) => {
       console.log(file);
 
       let orden = JSON.parse(req.body.orden);
-      orden.imagen = `https://api.poomapp.com/uploads/${file.filename}`;
+      orden.comprobante = `https://api.poomapp.com/${file.path}`;
  
       console.log(orden);
       Orden.findByIdAndUpdate(ordenId, { $set: orden }, { new: true })
