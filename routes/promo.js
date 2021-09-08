@@ -41,7 +41,34 @@ router.get("/", function(req, res, next) {
 
 
 //add promo
-router.post("/", upload.single("file_path"), (req, res) => {
+router.post("/", (req, res) => {
+  const nuevaPromo = req.body;
+  console.log(nuevaPromo);
+  const crearPromo = new Promo(nuevaPromo);
+  crearPromo.save((err, nuevo_Promo) => {
+    if (err) {  
+      res.send({ mensaje: "error in post request", res: err });
+    } else {
+      Usuarios.find({'intereses.name':promo.categoria}, (err, usuarios) => {
+        if (res.status == 400) {
+          res.send({ mensaje: "error en la petición", res: status, err });
+        } else {
+          let tokens = []
+          for (const item of usuarios) {
+            if (item.msgToken) {
+              tokens.push(item.msgToken)
+            }
+          }
+          postNotification(nuevo_Promo,tokens,promo.notificacion,nuevo_Promo.imagen)
+          res.send({ msg:"Promo guardado con exito", data:nuevo_Promo});
+        }
+      });
+    }
+  });
+});
+
+
+router.post("/file", upload.single("file_path"), (req, res) => {
   //process request  
 const file = req.file;
 const promo = req.body;
