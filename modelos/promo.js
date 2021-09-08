@@ -4,6 +4,7 @@ const Schema  = mongoose.Schema;
 const promoSchema = new Schema(
     [{
     comercio: { type: String,default:''},
+    comercioId: { type: String,default:''},
     categoria:{ type: String,default:''},
     imagen: { type: String,default:''},
     notificacion: { type: String,default:''},
@@ -17,6 +18,8 @@ const promoSchema = new Schema(
     }
     ],
     codigo:{ type: String, default:''},
+    isProduct:{ type: Boolean, default:false},
+    productoId:{ type: String,default:''}
     
 }]);
 
