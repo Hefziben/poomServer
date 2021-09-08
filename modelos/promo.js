@@ -18,7 +18,6 @@ const promoSchema = new Schema(
     }
     ],
     codigo:{ type: String, default:''},
-    isProduct:{ type: Boolean, default:false},
     productoId:{ type: String,default:''}
     
 }]);
