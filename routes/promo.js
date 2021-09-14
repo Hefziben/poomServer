@@ -153,8 +153,13 @@ crearPromo.save((err, nuevo_Promo) => {
             tokens.push(item.msgToken)
           }
         }
-        postNotification(nuevo_Promo,tokens,promo.notificacion,nuevo_Promo.imagen)
-        res.send({ msg:"Promo guardado con exito", data:nuevo_Promo});
+        console.log(tokens);
+        if (tokens.length) {
+          postNotification(nuevo_Promo,tokens,promo.notificacion,nuevo_Promo.imagen)
+          res.send({ msg:"Promo guardado con exito", data:nuevo_Promo});
+        } else {
+         res.send({ msg:"Promo guardado con exito", data:nuevo_Promo});
+        }
       }
     });
 
