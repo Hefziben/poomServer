@@ -49,7 +49,7 @@ router.post("/", (req, res) => {
     if (err) {  
       res.send({ mensaje: "error in post request", res: err });
     } else {
-      Usuarios.find({'intereses.name':promo.categoria}, (err, usuarios) => {
+      Usuarios.find({'intereses.name':nuevaPromo.categoria}, (err, usuarios) => {
         if (res.status == 400) {
           res.send({ mensaje: "error en la petición", res: status, err });
         } else {
