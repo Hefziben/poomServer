@@ -224,7 +224,7 @@ User.findByIdAndDelete(userId)
 axios
   .post(`${process.env.gatewayUrl}`, {
     Auth: {
-      ApiKey: 'process.env.ApiKey'
+      ApiKey: process.env.ApiKey
     },
     Trans: {
       Name: `${body.name} ${body.lastname}`
