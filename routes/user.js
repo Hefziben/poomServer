@@ -243,7 +243,7 @@ axios
     }
   })
   .then(function (response) {
-    res.send(JSON.stringify(response.data));
+    res.send(response.data);
   })
   .catch(error => {
     res.send(error)
