@@ -194,35 +194,61 @@ User.findByIdAndDelete(userId)
       }
       if (user.role == "User") {
 //process request
-const options = {
-  Auth: {
-    ApiKey: process.env.ApiKey,
-  },
+// const options = {
+//   Auth: {
+//     ApiKey: process.env.ApiKey,
+//   },
 
-  Transactions: [
-    {
-      TransactionType: "sale",
+//   Transactions: [
+//     {
+//       TransactionType: "sale",
   
-      Amount: body.amount
+//       Amount: body.amount
+//     }
+//   ],
+
+//   Payment: {
+//     BillingCCNumber:body.cardNumber,
+
+//     BillingCCExp: body.expiration,
+
+//     BillingCvv: body.secret,
+
+//     BillingFirstName: body.name,
+
+//     BillingLastName: body.lastname,
+
+//     BillingCCType: "Visa",
+//   },
+// }
+axios
+  .post(`${process.env.gatewayUrl}`, {
+    Auth: {
+      ApiKey: 'process.env.ApiKey'
+    },
+    Trans: {
+      Name: `${body.name} ${body.lastname}`
+    },
+    Transactions: [
+      {
+        TransactionType: 'sale',
+        paymentMethod: "Creditcard",
+        Amount: 0.99
+      }
+    ],
+    Payment: {
+      BillingCCNumber: body.cardNumber,
+      BillingCCExp: body.expiration,
+      BillingCvv: body.secret
     }
-  ],
-
-  Payment: {
-    BillingCCNumber:body.cardNumber,
-
-    BillingCCExp: body.expiration,
-
-    BillingCvv: body.secret,
-
-    BillingFirstName: body.name,
-
-    BillingLastName: body.lastname,
-
-    BillingCCType: "Visa",
-  },
-}
-const response = axios.post(`${process.env.gatewayUrl}`,options);
-res.send(response);
+  })
+  .then(function (response) {
+    res.send(JSON.stringify(response.data));
+  })
+  .catch(error => {
+    res.send(error)
+    console.error('[ ERROR ] ', error)
+  })
       }
 
 
