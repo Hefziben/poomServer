@@ -39,6 +39,16 @@ router.get("/producto/:id", function (req, res, next) {
     }
   });
 });
+router.get("/promociones", function (req, res, next) {
+  const {id} = req.params
+  Comercio.find({'productos.isPromo':true}, (err, selected) => {
+    if (res.status == 400) {
+      res.send({ mensaje: "error en la petición", res: status, err });
+    } else {
+      res.send(selected);
+    }
+  });
+});
 
 //add comercio with file
 router.post("/crear", upload.single("file_path"), (req, res) => {
