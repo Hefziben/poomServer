@@ -10,17 +10,17 @@ const ordenSchema = new Schema(
         fecha:{ type: String },
         estado:{ type: String }, //1. en proceso, 2. confirmada , 3.entregada. 
         sub_total:{ type: String },
-            envio:{ type: String },
-            total:{ type: String },
-        ganancia:{ type: String },
-        cargos:{ type: String },
-        pagar:{ type: String },
         impuestos:{ type: String },
+        envio:{ type: String },
+        total:{ type: String },
+        cargos:{ type: String },
+        ganancia:{ type: String },        
+        pagar:{ type: String },        
         metodo:{ type: String },
         comprobante:{ type: String },
         transaccion:{ type: String },
         comentarios:[{
-            nota:{ type: String }
+        nota:{ type: String }
         }],
         verificador:{ type: String },
 }]);

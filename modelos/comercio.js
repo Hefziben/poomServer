@@ -31,7 +31,22 @@ const comercioSchema = new Schema(
             envio:{ type: Boolean, default:true },  
             ventas:{ type: Number, default:0 },
             calificacion:{ type: Number, default:0 }, 
-            isPromo:{ type: Boolean, default:false},         
+            isPromo:{ type: Boolean, default:false},   
+            additional:{
+                comercio: { type: String,default:''},
+                comercioId: { type: String,default:''},
+                notificacion: { type: String,default:''},
+                validez:{ type:String, default:''},
+                telefono:{ type: String, default:''},
+                metodo:{ type: String, default:'codigo'},
+                codigo:{ type: String, default:''},
+                ubicacion: [
+                {
+                    lat:{ type: Number},
+                    lng:{ type: Number},
+                }
+                ]
+            }      
         }
     ],
     canjes:[
