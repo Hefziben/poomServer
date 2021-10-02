@@ -28,6 +28,18 @@ router.get("/", function (req, res, next) {
   });
 });
 
+//get producto by Id
+router.get("/", function (req, res, next) {
+  const {id,producto} = req.params
+  Comercio.findOne({_id:id,'productos._id':producto}, (err, selected) => {
+    if (res.status == 400) {
+      res.send({ mensaje: "error en la petición", res: status, err });
+    } else {
+      res.send(selected);
+    }
+  });
+});
+
 //add comercio with file
 router.post("/crear", upload.single("file_path"), (req, res) => {
   const authHeader = req.headers.authorization;
