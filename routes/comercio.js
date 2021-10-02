@@ -29,7 +29,7 @@ router.get("/", function (req, res, next) {
 });
 
 //get producto by Id
-router.get("/", function (req, res, next) {
+router.get("/producto/:id/:producto", function (req, res, next) {
   const {id,producto} = req.params
   Comercio.findOne({_id:id,'productos._id':producto}, (err, selected) => {
     if (res.status == 400) {
