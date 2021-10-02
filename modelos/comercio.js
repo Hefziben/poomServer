@@ -38,7 +38,7 @@ const comercioSchema = new Schema(
                 notificacion: { type: String,default:''},
                 validez:{ type:String, default:''},
                 telefono:{ type: String, default:''},
-                metodo:{ type: String, default:'codigo'},
+                metodo:{ type: String, default:'producto'},
                 codigo:{ type: String, default:''},
                 ubicacion: [
                 {

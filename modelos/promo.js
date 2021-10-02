@@ -10,7 +10,7 @@ const promoSchema = new Schema(
     notificacion: { type: String,default:''},
     validez:{ type:String, default:''},
     telefono:{ type: String, default:''},
-    metodo:{ type: String, default:'codigo'},
+    metodo:{ type: String, default:'codigo'}, //codigo, cupon, producto,tienda
     ubicacion: [
     {
         lat:{ type: Number},
