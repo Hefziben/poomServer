@@ -5,6 +5,7 @@ const comercioSchema = new Schema(
     [{
     nombre: { type: String,  },
     tipo: { type: String},
+    password:{ type: String, default:'contrasena'},
     ubicacion: [
         {
             lat:{ type: Number},
