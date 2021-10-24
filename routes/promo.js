@@ -37,6 +37,16 @@ router.get("/", function(req, res, next) {
     }
   });
 });
+router.get("/comercio/:id", function(req, res, next) {
+  const id = req.params.id
+  Promo.find({comercioId:id}, (err, promos) => {
+    if (res.status == 400) {
+      res.send({ mensaje: "error en la petición", res: status, err });
+    } else {
+      res.send(promos);
+    }
+  });
+});
 
 
 
