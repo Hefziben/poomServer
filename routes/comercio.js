@@ -237,7 +237,7 @@ router.delete("/:id", (req, res) => {
 router.post("/login/", function(req, res, next) {
   
   const comercio = req.body;
-
+console.log(comercio);
   Comercio.findOne({telefono:comercio.telefono,password:comercio.password}, (err, response) => {
   
     if (res.status == 400) {
