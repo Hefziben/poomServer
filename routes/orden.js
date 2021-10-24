@@ -29,7 +29,7 @@ router.get("/", function (req, res, next) {
 });
 
 /* GET ordenes by order number. */
-router.get("/numero", function (req, res, next) {
+router.get("/numero/:id", function (req, res, next) {
   const orden = req.params.numero;
   Orden.findOne({ordenNumero:orden}, (err, ordenes) => {
     if (res.status == 400) {
