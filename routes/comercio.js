@@ -234,4 +234,29 @@ router.delete("/:id", (req, res) => {
   }
 });
 
+router.post("/login/", function(req, res, next) {
+  
+  const comercio = req.body;
+
+  Comercio.findOne({telefono:comercio.telefono,contrasena:comercio.password}, (err, response) => {
+  
+    if (res.status == 400) {
+      res.send({ mensaje: "error in get request", res: err });
+    } else {
+      if (response) {
+        console.log(response);
+        // generar token
+        const accessToken = jwt.sign({ user: response.telefono,  role:response.cliente_tipo }, process.env.TOKEN_SECRET,{ expiresIn: '86400s' });
+
+        res.json({
+         token:accessToken, data:response
+      });
+      } else{
+        res.send({ data: "credenciales incorrectas" }); 
+      }
+
+    }
+  });
+});
+
 module.exports = router;
