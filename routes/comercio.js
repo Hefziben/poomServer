@@ -238,18 +238,20 @@ router.post("/login/", function(req, res, next) {
   
   const comercio = req.body;
 console.log(comercio);
-  Comercio.find({}, (err, response) => {
+  Comercio.find({telefono:comercio.telefono}, (err, response) => {
     console.log(response);
+    const comercio = response.filter(a => a.telefono == comercio.telefono && a.password == comercio.password);
+    console.log(comercio);
     if (res.status == 400) {
       res.send({ mensaje: "error in get request", res: err });
     } else {
-      if (response) {
+      if (comercio) {
       
         // generar token
-        const accessToken = jwt.sign({ user: response.telefono,  role:response.cliente_tipo }, process.env.TOKEN_SECRET,{ expiresIn: '86400s' });
+        const accessToken = jwt.sign({ user: comercio.telefono,  role:comercio.cliente_tipo }, process.env.TOKEN_SECRET,{ expiresIn: '86400s' });
 
         res.json({
-         token:accessToken, data:response
+         token:accessToken, data:comercio
       });
       } else{
         res.send({ data: "credenciales incorrectas" }); 
