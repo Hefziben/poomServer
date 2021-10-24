@@ -28,6 +28,18 @@ router.get("/", function (req, res, next) {
   });
 });
 
+/* GET ordenes by order number. */
+router.get("/numero", function (req, res, next) {
+  const orden = req.params.numero;
+  Orden.findOne({ordenNumero:orden}, (err, ordenes) => {
+    if (res.status == 400) {
+      res.send({ mensaje: "error en la petición", res: status, err });
+    } else {
+      res.send(ordenes);
+    }
+  });
+});
+
 
 
 //add orden
