@@ -236,9 +236,9 @@ router.delete("/:id", (req, res) => {
 
 router.post("/login/", function(req, res, next) {
   
-  const comercio = req.body;
-console.log(comercio);
-  Comercio.find({telefono:comercio.telefono}, (err, response) => {
+  const cliente = req.body;
+console.log(cliente);
+  Comercio.find({telefono:cliente.telefono}, (err, response) => {
     console.log(response);
     const comercio = response.filter(a => a.telefono == comercio.telefono && a.password == comercio.password);
     console.log(comercio);
