@@ -238,7 +238,7 @@ router.post("/login/", function(req, res, next) {
   
   const comercio = req.body;
 
-  Comercio.findOne({telefono:comercio.telefono,contrasena:comercio.password}, (err, response) => {
+  Comercio.findOne({telefono:comercio.telefono,password:comercio.password}, (err, response) => {
   
     if (res.status == 400) {
       res.send({ mensaje: "error in get request", res: err });
