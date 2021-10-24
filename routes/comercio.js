@@ -239,12 +239,12 @@ router.post("/login/", function(req, res, next) {
   const comercio = req.body;
 console.log(comercio);
   Comercio.findOne({telefono:comercio.telefono,password:comercio.password}, (err, response) => {
-  
+    console.log(response);
     if (res.status == 400) {
       res.send({ mensaje: "error in get request", res: err });
     } else {
       if (response) {
-        console.log(response);
+      
         // generar token
         const accessToken = jwt.sign({ user: response.telefono,  role:response.cliente_tipo }, process.env.TOKEN_SECRET,{ expiresIn: '86400s' });
 
