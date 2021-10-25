@@ -31,7 +31,7 @@ router.get("/", function (req, res, next) {
 /* GET ordenes by order number. */
 router.get("/numero/:id", function (req, res, next) {
   const orden = req.params.id;
-  Orden.find({ordenNumero:orden}, (err, ordenes) => {
+  Orden.findOne({ordenNumero:orden}, (err, ordenes) => {
     if (res.status == 400) {
       res.send({ mensaje: "error en la petición", res: status, err });
     } else {
