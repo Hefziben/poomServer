@@ -31,7 +31,7 @@ router.get("/", function (req, res, next) {
 /* GET ordenes by order number. */
 router.get("/numero/:id", function (req, res, next) {
   const orden = req.params.id;
-  Orden.findOne({ordenNumero:orden}, (err, ordenes) => {
+  Orden.findOne({ ordenNumero: orden }, (err, ordenes) => {
     if (res.status == 400) {
       res.send({ mensaje: "error en la petición", res: status, err });
     } else {
@@ -82,7 +82,7 @@ router.post("/file", upload.single("file_path"), (req, res) => {
       console.log(file);
       let orden = JSON.parse(req.body.orden);
       orden.comprobante = `https://api.poomapp.com/${file.path}`;
-      console.log('comprobante',orden.comprobante);
+      console.log('comprobante', orden.comprobante);
       const crearOrden = new Orden(orden);
       crearOrden.save((err, nueva_orden) => {
         if (err) {
@@ -90,7 +90,7 @@ router.post("/file", upload.single("file_path"), (req, res) => {
 
           res.send(errMsj);
         } else {
-          res.send({mensaje:"Comercio guardado con exito",resp:nueva_orden});
+          res.send({ mensaje: "Comercio guardado con exito", resp: nueva_orden });
         }
       });
     });
@@ -100,23 +100,34 @@ router.post("/file", upload.single("file_path"), (req, res) => {
 });
 //get orden by ID
 router.get("/:id", (req, res) => {
-      //process request
-      var id = req.params.id;
-      Orden.findOne({ $or: [{ "orden.comercioId": id }, { "orden.usurioId": id }, { _id: id }] })
-        .exec()
-        .then((data) => res.status(200).send(data))
-        .catch((err) => res.status(400).send(err));
+  //process request
+  var id = req.params.id;
+  Orden.findOne({ $or: [{ "orden.comercioId": id }, { "orden.usurioId": id }, { _id: id }] })
+    .exec()
+    .then((data) => res.status(200).send(data))
+    .catch((err) => res.status(400).send(err));
   const authHeader = req.headers.authorization;
 });
 
 //Update Orden
 router.put("/:id", (req, res) => {
-  const ordenId = req.params.id;
-  console.log(ordenId);
+  const authHeader = req.headers.authorization;
+  if (authHeader) {
+    const token = authHeader.split(" ")[1];
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+      const ordenId = req.params.id;
+      console.log(ordenId);
+      Orden.findByIdAndUpdate(ordenId, { $set: req.body }, { new: true })
+        .then((data) => res.status(200).send("Actualizado"))
+        .catch((err) => res.status(400).send(err));
+    })
+  } else {
+    res.sendStatus(401);
+  }
 
-  Orden.findByIdAndUpdate(ordenId, { $set: req.body }, { new: true })
-    .then((data) => res.status(200).send("Actualizado"))
-    .catch((err) => res.status(400).send(err));
 });
 
 
@@ -137,10 +148,10 @@ router.put("/file/:id", upload.single("file_path"), (req, res) => {
 
       let orden = JSON.parse(req.body.orden);
       orden.comprobante = `https://api.poomapp.com/${file.path}`;
- 
+
       console.log(orden);
       Orden.findByIdAndUpdate(ordenId, { $set: orden }, { new: true })
-        .then((respuesta) => res.status(200).send({mensaje:"orden actualizada",resp:orden}))
+        .then((respuesta) => res.status(200).send({ mensaje: "orden actualizada", resp: orden }))
         .catch((err) => res.status(400).send(err));
     });
   } else {
