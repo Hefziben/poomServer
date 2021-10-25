@@ -30,7 +30,7 @@ router.get("/", function (req, res, next) {
 
 /* GET ordenes by order number. */
 router.get("/numero/:id", function (req, res, next) {
-  const orden = req.params.numero;
+  const orden = req.params.id;
   Orden.find({ordenNumero:orden}, (err, ordenes) => {
     if (res.status == 400) {
       res.send({ mensaje: "error en la petición", res: status, err });
@@ -170,12 +170,12 @@ router.put("/file/:id", upload.single("file_path"), (req, res) => {
 //   }
 // });
 
-router.delete("/:id", (req, res) => {
-      //process request
-      const messageId = req.params.id;
-      Orden.findByIdAndDelete(messageId)
-        .then((data) => res.status(200).send("orden borrado"))
-        .catch((err) => res.status(400).send(err.message));
-});
+// router.delete("/:id", (req, res) => {
+//       //process request
+//       const messageId = req.params.id;
+//       Orden.findByIdAndDelete(messageId)
+//         .then((data) => res.status(200).send("orden borrado"))
+//         .catch((err) => res.status(400).send(err.message));
+// });
 
 module.exports = router;
