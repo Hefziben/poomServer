@@ -150,24 +150,32 @@ router.put("/file/:id", upload.single("file_path"), (req, res) => {
 
 
 
-delete orden
+//delete orden
+// router.delete("/:id", (req, res) => {
+//   const authHeader = req.headers.authorization;
+//   if (authHeader) {
+//     const token = authHeader.split(" ")[1];
+//     jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+//       if (err) {
+//         return res.sendStatus(403);
+//       }
+//       //process request
+//       const messageId = req.params.id;
+//       Orden.findByIdAndDelete(messageId)
+//         .then((data) => res.status(200).send("orden borrado"))
+//         .catch((err) => res.status(400).send(err.message));
+//     });
+//   } else {
+//     res.sendStatus(401);
+//   }
+// });
+
 router.delete("/:id", (req, res) => {
-  const authHeader = req.headers.authorization;
-  if (authHeader) {
-    const token = authHeader.split(" ")[1];
-    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-      if (err) {
-        return res.sendStatus(403);
-      }
       //process request
       const messageId = req.params.id;
       Orden.findByIdAndDelete(messageId)
         .then((data) => res.status(200).send("orden borrado"))
         .catch((err) => res.status(400).send(err.message));
-    });
-  } else {
-    res.sendStatus(401);
-  }
 });
 
 module.exports = router;
