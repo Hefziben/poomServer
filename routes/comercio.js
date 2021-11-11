@@ -227,7 +227,7 @@ router.delete("/:id", (req, res) => {
 router.post("/login/", function(req, res, next) {
   
   const cliente = req.body;
-  Comercio.find({telefono:cliente.telefono}, (err, response) => {
+  Comercio.findOne({'telefono':cliente.telefono}, (err, response) => {
     console.log(response);
     const comercio = response.filter(a => a.telefono == cliente.telefono && a.password == cliente.password);
     console.log(comercio);
@@ -245,6 +245,23 @@ router.post("/login/", function(req, res, next) {
       } else{
         res.send({ data: "credenciales incorrectas" }); 
       }
+
+    }
+  });
+});
+
+/* Veryfi user. */
+router.post("/verify/", function(req, res, next) {
+  const user = req.body;
+  Comercio.findOne({ telefono: user.telefono}, (err, data) => {
+    if (res.status == 400) {
+      res.send({ mensaje: "error in get request", res: err });
+    } else {
+      if(data){
+              res.send({ mensaje: "usuario existe", user: data });
+} else{
+                res.send({ mensaje: "usuario no existe"});
+}
 
     }
   });
