@@ -88,7 +88,8 @@ const comercioSchema = new Schema(
     isShopActive:{type:Boolean, default:false},
     email:{ type: String },
     website:{ type: String },
-    telefono:{ type: String }
+    telefono:{ type: String },
+    otp:{ type: String }
 }]);
 
 const Comercio = mongoose.model('Comercio', comercioSchema);
