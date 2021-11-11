@@ -140,18 +140,9 @@ router.post("/producto_update", upload.single("file_path"), (req, res) => {
   }
 });
 //add comercio
-router.post("/", (req, res) => {
-  const authHeader = req.headers.authorization;
-  if (authHeader) {
-    const token = authHeader.split(" ")[1];
-    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-      if (err) {
-        return res.sendStatus(403);
-      }
-
-      //process request
+router.post("/", (req, res) => { 
       const crearComercio = new Comercio(req.body);
-      crearComercio.save((err, nuevo_Comercio) => {
+      crearComercio.save((err) => {
         if (err) {
           errMsj = err.message;
 
@@ -160,10 +151,8 @@ router.post("/", (req, res) => {
           res.send("Comercio guardado con exito");
         }
       });
-    });
-  } else {
-    res.sendStatus(401);
-  }
+  
+
 });
 //get comercio by ID
 router.get("/:id", (req, res) => {
