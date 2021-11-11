@@ -141,14 +141,15 @@ router.post("/producto_update", upload.single("file_path"), (req, res) => {
 });
 //add comercio
 router.post("/", (req, res) => { 
+  console.log(req.body);
       const crearComercio = new Comercio(req.body);
-      crearComercio.save((err) => {
+      crearComercio.save((err, nuevo_Comercio) => {
         if (err) {
           errMsj = err.message;
 
           res.send(errMsj);
         } else {
-          res.send("Comercio guardado con exito");
+          res.send({message:"Comercio guardado con exito",respuesta:nuevo_Comercio});
         }
       });
   
