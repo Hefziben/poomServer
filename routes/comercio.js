@@ -250,10 +250,10 @@ router.post("/login/", function(req, res, next) {
   });
 });
 
-/* Veryfi user. */
+/* Veryfi comercio. */
 router.post("/verify/", function(req, res, next) {
   const user = req.body;
-  Comercio.findOne({ telefono: user.telefono}, (err, data) => {
+  Comercio.findOne({ telefono: `507${user.telefono}`}, (err, data) => {
     if (res.status == 400) {
       res.send({ mensaje: "error in get request", res: err });
     } else {
