@@ -4,6 +4,12 @@ const Schema  = mongoose.Schema;
 const comercioSchema = new Schema(
     [{
     nombre: { type: String,  },
+    cliente_nombre: { type: String },
+    cliente_apellido: { type: String},
+    cliente_nombre: { type: String},
+    cliente_idcard: { type: String},
+    cliente_genero: { type: String},
+    cliente_nacimiento: { type: String},
     tipo: { type: String},
     password:{ type: String, default:'contrasena'},
     cliente_tipo:{ type: String, default:'comercio'},
@@ -13,7 +19,7 @@ const comercioSchema = new Schema(
             lng:{ type: Number},
         }
         ],
-    planActivo: { type: String },
+    planActivo: { type: String, default:"Básico" },
     promociones:[
         {
             codigo:{ type: String }
@@ -78,7 +84,7 @@ const comercioSchema = new Schema(
     cantidadventas:{ type: Number, default:0 },    
     imagen: { type: String },
     provincia:{ type: String,default:'Panamá'},
-    isShop:{type:Boolean, default:false},
+    isShop:{type:Boolean, default:true},
     isShopActive:{type:Boolean, default:false},
     email:{ type: String },
     website:{ type: String },
