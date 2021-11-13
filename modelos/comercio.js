@@ -34,6 +34,7 @@ const comercioSchema = new Schema(
             imagen:{ type: String },
             categoria:{ type: String },
             descripcion:{ type: String },
+            inventario:{ type: Number, default:0 },
             disponible:{ type: Boolean, default:true },
             cantidad:{ type: Number, default:0 },
             envio:{ type: Boolean, default:true },  
