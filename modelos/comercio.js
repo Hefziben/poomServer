@@ -40,7 +40,8 @@ const comercioSchema = new Schema(
             envio:{ type: Boolean, default:true },  
             ventas:{ type: Number, default:0 },
             calificacion:{ type: Number, default:0 }, 
-            isPromo:{ type: Boolean, default:false},   
+            isPromo:{ type: Boolean, default:false},  
+            visible:{ type: Boolean, default:false},
             additional:{
                 comercio: { type: String,default:''},
                 comercioId: { type: String,default:''},
