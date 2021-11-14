@@ -170,6 +170,7 @@ router.get("/:id", (req, res) => {
 router.put("/:id", (req, res) => {
   const comercioId = req.params.id;
   console.log(comercioId);
+  req.body.provincia = ['Panamá'];
   console.log(req.body);
 
   Comercio.findByIdAndUpdate(comercioId, { $set: req.body }, { new: true })
