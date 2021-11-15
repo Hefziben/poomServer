@@ -87,6 +87,7 @@ const comercioSchema = new Schema(
     imagen: { type: String },
     provincia:[],
     isShop:{type:Boolean, default:true},
+    initialConfig:{type:Boolean, default:false},
     isShopActive:{type:Boolean, default:false},
     email:{ type: String },
     website:{ type: String },
