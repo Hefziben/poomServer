@@ -29,9 +29,9 @@ router.get("/", function(req, res, next) {
       res.send({ mensaje: "error in get request", res: err });
     } else {
      
-      const res = users.map(({ contrasena, ...r }) => r);
-      console.log(res[0]);
-      res.send({ mensaje: "Success", res: res });
+      const newUsers = users.map(({ contrasena, ...r }) => r);
+      console.log(newUsers[0]);
+      res.send({ mensaje: "Success", res: newUsers });
     }
   });
 });
