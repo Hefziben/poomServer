@@ -212,7 +212,7 @@ router.get("/upDatepasswords", (req, res) => {
       bcrypt.hash(item.contrasena, saltRounds, function(err, hash) {
         item.contrasena = hash;
         User.findByIdAndUpdate(item._id, { $set: item }, { new: true })
-        .then(() => res.status(200).send({mensaje:'Contrasena cambiada con exito'}))
+        .then(() => console.log('Contrasena cambiada con exito'))
         .catch(err => res.status(400).send(err));
      });
     })
