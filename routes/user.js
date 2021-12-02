@@ -30,6 +30,7 @@ router.get("/", function(req, res, next) {
     } else {
      
       users.forEach(a => delete a.contrasena);
+      console.log(users[0]);
       res.send({ mensaje: "Success", res: users });
     }
   });
