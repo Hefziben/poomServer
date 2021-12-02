@@ -31,7 +31,11 @@ router.get("/", function(req, res, next) {
      users.forEach(el => {
        delete el.contrasena
      })
-      res.send({ mensaje: "Success", res: users });
+     let allUsers = users.map(el => {
+       delete el.contrasena
+       return el
+     })
+      res.send({ mensaje: "Success", res: allUsers });
     }
   });
 });
