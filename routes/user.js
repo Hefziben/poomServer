@@ -214,9 +214,9 @@ router.get("/updatePasswords/:id", (req, res) => {
       bcrypt.hash(item.contrasena, saltRounds, function(err, hash) {
         item.contrasena = hash;
         console.log(item.contrasena);
-        // User.findByIdAndUpdate(item._id, { $set: item }, { new: true })
-        // .then(() => console.log('Contrasena cambiada con exito'))
-        // .catch(err => res.status(400).send(err));
+        User.findByIdAndUpdate(item._id, { $set: item }, { new: true })
+        .then(() => console.log('Contrasena cambiada con exito'))
+        .catch(err => res.status(400).send(err));
      });
     })
     }
