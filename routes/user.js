@@ -24,21 +24,11 @@ const upload = multer({
 
 /* GET User listing. */
 router.get("/", function(req, res, next) {
-  User.find({}, (err, users) => {
+  User.find({},{ contrasena: 0,}, (err, users) => {
     if (res.status == 400) {
       res.send({ mensaje: "error in get request", res: err });
     } else {   
-     let newUsers = users.map(el => {
-       let newUser = {};
-      for (const key in el) {
-        if (key != 'contrasena') {
-          newUser[key] = el[key]
-          console.log(key);
-        }          
-      }
-      return newUser     
-      });
-      res.send({ mensaje: "Success", res: newUsers });
+      res.send({ mensaje: "Success", res: users });
     }
   });
 });
