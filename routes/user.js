@@ -28,7 +28,16 @@ router.get("/", function(req, res, next) {
     if (res.status == 400) {
       res.send({ mensaje: "error in get request", res: err });
     } else {   
-      res.send({ mensaje: "Success", res: users });
+     let newUsers = user.map(el => {
+       let newUser = {};
+      for (const key in el) {
+        if (key != constrasena) {
+          newUser[key] = el[key]
+        }          
+      }
+      return newUser     
+      });
+      res.send({ mensaje: "Success", res: newUsers });
     }
   });
 });
