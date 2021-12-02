@@ -148,6 +148,7 @@ router.put("/password/:id", (req, res) => {
 });
 
 });
+
 router.post("/login/", function(req, res, next) {
   
   const user = req.body;
@@ -203,7 +204,7 @@ router.post("/verifyPassword", function(req, res, next) {
   });
 });
 
-router.get("/upDatepasswords", (req, res) => {
+router.get("/updatePasswords/:id", (req, res) => {
   User.find({}, (err, users) => {
     console.log(err);
     if (res.status == 400) {
