@@ -31,7 +31,7 @@ router.get("/", function(req, res, next) {
      let newUsers = users.map(el => {
        let newUser = {};
       for (const key in el) {
-        if (key != constrasena) {
+        if (key != 'contrasena') {
           newUser[key] = el[key]
         }          
       }
