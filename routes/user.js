@@ -33,6 +33,7 @@ router.get("/", function(req, res, next) {
       for (const key in el) {
         if (key != 'contrasena') {
           newUser[key] = el[key]
+          console.log(key);
         }          
       }
       return newUser     
