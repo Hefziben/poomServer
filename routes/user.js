@@ -6,7 +6,8 @@ const { param } = require("./promo");
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const asyncHandler = require('express-async-handler')
-
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 require('dotenv').config()
 
 const storage = multer.diskStorage({
@@ -36,14 +37,18 @@ router.get("/", function(req, res, next) {
 router.post("/", (req, res) => {
   const newUser = req.body;
   console.log(newUser);
-  const createUser = new User(newUser);
-  createUser.save((err, new_User) => {
-    if (err) {  
-      res.send({ mensaje: "error in post request", res: err });
-    } else {
-      res.send({ mensaje: "User saved", res: new_User });
-    }
-  });
+  bcrypt.hash(newUser.contrasena,saltRounds,function(err,hash){
+    newUser.contrasena = hash;
+    const createUser = new User(newUser);
+    createUser.save((err, new_User) => {
+      if (err) {  
+        res.send({ mensaje: "error in post request", res: err });
+      } else {
+        res.send({ mensaje: "User saved"});
+      }
+    });
+  })
+
 });
 
 //get User by ID
@@ -132,6 +137,17 @@ User.findByIdAndUpdate(userId, { $set: update }, { new: true })
 
 });
 
+router.put("/password/:id", (req, res) => {
+  const userId = req.params.id;
+  const user = req.body;
+  bcrypt.hash(user.contrasena, saltRounds, function(err, hash) {
+   user.contrasena = hash;
+   User.findByIdAndUpdate(userId, { $set: user }, { new: true })
+   .then(() => res.status(200).send({mensaje:'Contrasena cambiada con exito'}))
+   .catch(err => res.status(400).send(err));
+});
+
+});
 router.post("/login/", function(req, res, next) {
   
   const user = req.body;
@@ -157,6 +173,55 @@ router.post("/login/", function(req, res, next) {
   });
 });
 
+router.post("/verifyPassword", function(req, res, next) {
+  
+  const user = req.body;
+
+  User.findOne({telefono:user.telefono}, (err, response) => {
+
+    if (res.status == 400) {
+      res.send({ mensaje: "error in get request", res: err });
+    } else {
+      if (response) {
+        bcrypt.compare(user.contrasena, response.contrasena, function(err, result) {
+          if (result) {
+            // generar token
+            const accessToken = jwt.sign({ user: response.telefono,  role:response.role }, process.env.TOKEN_SECRET,{ expiresIn: '86400s' });
+            delete response.contrasena
+            res.send({ mensaje: "Success", token:accessToken, data: response});
+          } else{
+            res.send({ mensaje: "credenciales incorrectas", result: result});
+          }
+         
+      });
+   
+      } else{
+        res.send({ data: "credenciales incorrectas" }); 
+      }
+
+    }
+  });
+});
+
+router.get("/upDatepasswords", (req, res) => {
+  User.find({}, (err, users) => {
+    if (res.status == 400) {
+      res.send({ mensaje: "error in get request", res: err });
+    } else {
+    users.forEach(item =>{
+      bcrypt.hash(item.contrasena, saltRounds, function(err, hash) {
+        item.contrasena = hash;
+        User.findByIdAndUpdate(item._id, { $set: item }, { new: true })
+        .then(() => res.status(200).send({mensaje:'Contrasena cambiada con exito'}))
+        .catch(err => res.status(400).send(err));
+     });
+    })
+    }
+  });
+
+
+
+});
 //delete User
 router.delete("/:id", (req, res) => {
   const authHeader = req.headers.authorization;
