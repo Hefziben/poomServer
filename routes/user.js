@@ -24,11 +24,14 @@ const upload = multer({
 
 /* GET User listing. */
 router.get("/", function(req, res, next) {
-  User.find({}, (err, user) => {
+  User.find({}, (err, users) => {
     if (res.status == 400) {
       res.send({ mensaje: "error in get request", res: err });
     } else {
-      res.send({ mensaje: "Success", res: user });
+     users.forEach(el => {
+       delete el.contrasena
+     })
+      res.send({ mensaje: "Success", res: users });
     }
   });
 });
@@ -204,27 +207,27 @@ router.post("/verifyPassword", function(req, res, next) {
   });
 });
 
-router.get("/updatePasswords/:id", (req, res) => {
-  User.find({}, (err, users) => {
-    console.log(err);
-    if (res.status == 400) {
-      res.send({ mensaje: "error in get request", res: err });
-    } else {
-    users.forEach(item =>{
-      bcrypt.hash(item.contrasena, saltRounds, function(err, hash) {
-        item.contrasena = hash;
-        console.log(item.contrasena);
-        User.findByIdAndUpdate(item._id, { $set: item }, { new: true })
-        .then(() => console.log('Contrasena cambiada con exito'))
-        .catch(err => res.status(400).send(err));
-     });
-    })
-    }
-  });
+// router.get("/updatePasswords/:id", (req, res) => {
+//   User.find({}, (err, users) => {
+//     console.log(err);
+//     if (res.status == 400) {
+//       res.send({ mensaje: "error in get request", res: err });
+//     } else {
+//     users.forEach(item =>{
+//       bcrypt.hash(item.contrasena, saltRounds, function(err, hash) {
+//         item.contrasena = hash;
+//         console.log(item.contrasena);
+//         User.findByIdAndUpdate(item._id, { $set: item }, { new: true })
+//         .then(() => console.log('Contrasena cambiada con exito'))
+//         .catch(err => res.status(400).send(err));
+//      });
+//     })
+//     }
+//   });
 
 
 
-});
+// });
 //delete User
 router.delete("/:id", (req, res) => {
   const authHeader = req.headers.authorization;
