@@ -27,11 +27,8 @@ router.get("/", function(req, res, next) {
   User.find({}, (err, users) => {
     if (res.status == 400) {
       res.send({ mensaje: "error in get request", res: err });
-    } else {
-     
-      const newUsers = users.map(({ contrasena, ...r }) => r);
-      console.log(newUsers[0]);
-      res.send({ mensaje: "Success", res: newUsers });
+    } else {   
+      res.send({ mensaje: "Success", res: users });
     }
   });
 });
