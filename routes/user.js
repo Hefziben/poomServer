@@ -184,7 +184,7 @@ router.post("/login", function(req, res, next) {
       res.send({ mensaje: "error in get request", res: err });
     } else {
       if (response) {
-        bcrypt.compare(user.contrasena, response.contrasena, function(err, result) {
+        bcrypt.compare(user.password, response.contrasena, function(err, result) {
           if (result) {
             // generar token
             const accessToken = jwt.sign({ user: response.telefono,  role:response.role }, process.env.TOKEN_SECRET,{ expiresIn: '86400s' });
