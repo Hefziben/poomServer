@@ -28,14 +28,9 @@ router.get("/", function(req, res, next) {
     if (res.status == 400) {
       res.send({ mensaje: "error in get request", res: err });
     } else {
-     users.forEach(el => {
-       delete el.contrasena
-     })
-     let allUsers = users.map(el => {
-       delete el.contrasena
-       return el
-     })
-      res.send({ mensaje: "Success", res: allUsers });
+     
+      users.forEach(a => delete a.contrasena);
+      res.send({ mensaje: "Success", res: users });
     }
   });
 });
