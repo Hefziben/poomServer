@@ -205,15 +205,17 @@ router.post("/verifyPassword", function(req, res, next) {
 
 router.get("/upDatepasswords", (req, res) => {
   User.find({}, (err, users) => {
+    console.log(err);
     if (res.status == 400) {
       res.send({ mensaje: "error in get request", res: err });
     } else {
     users.forEach(item =>{
       bcrypt.hash(item.contrasena, saltRounds, function(err, hash) {
         item.contrasena = hash;
-        User.findByIdAndUpdate(item._id, { $set: item }, { new: true })
-        .then(() => console.log('Contrasena cambiada con exito'))
-        .catch(err => res.status(400).send(err));
+        console.log(item.contrasena);
+        // User.findByIdAndUpdate(item._id, { $set: item }, { new: true })
+        // .then(() => console.log('Contrasena cambiada con exito'))
+        // .catch(err => res.status(400).send(err));
      });
     })
     }
