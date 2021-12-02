@@ -24,7 +24,7 @@ const upload = multer({
 
 /* GET User listing. */
 router.get("/", function(req, res, next) {
-  User.find({},{ contrasena: 0,}, (err, users) => {
+  User.find({},{ contrasena: 0}, (err, users) => {
     if (res.status == 400) {
       res.send({ mensaje: "error in get request", res: err });
     } else {   
@@ -186,10 +186,12 @@ router.post("/login", function(req, res, next) {
       if (response) {
         bcrypt.compare(user.password, response.contrasena, function(err, result) {
           if (result) {
-            // generar token
-            const accessToken = jwt.sign({ user: response.telefono,  role:response.role }, process.env.TOKEN_SECRET,{ expiresIn: '86400s' });
-            delete response.contrasena
-            res.send({ mensaje: "Success", token:accessToken, data: response});
+            User.findOne({telefono:user.telefono,},{ contrasena: 0}, (err, userFilter) => {
+                // generar token
+              const accessToken = jwt.sign({ user: userFilter.telefono,  role:response.role }, process.env.TOKEN_SECRET,{ expiresIn: '86400s' });
+              res.send({ mensaje: "Success", token:accessToken, data: userFilter});
+            })
+          
           } else{
             res.send({ mensaje: "credenciales incorrectas", result: result});
           }
