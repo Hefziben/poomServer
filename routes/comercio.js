@@ -228,21 +228,22 @@ router.delete("/:id", (req, res) => {
 
 router.post("/login/", function(req, res, next) {
   
-  const cliente = req.body;
-  Comercio.find({telefono:cliente.telefono}, (err, response) => {
+  const comercio = req.body;
+  Comercio.find({telefono:comercio.telefono}, (err, response) => {
     console.log(response.password);
-    // const comercio = response.filter(a => a.telefono == cliente.telefono && a.password == cliente.password);
+    // const comercio = response.filter(a => a.telefono == comercio.telefono && a.password == comercio.password);
     // console.log(comercio);
     if (res.status == 400) {
       res.send({ mensaje: "error in get request", res: err });
     } else {
       if (response) {
-        bcrypt.compare(cliente.password, response.password, function(err, result) {
+        bcrypt.compare(comercio.password, response.password, function(err, result) {
+          console.log(result);
           if (result) {
-            Comercio.findOne({telefono:cliente.telefono},{ password: 0}, (err, clienteFilter) => {
+            Comercio.findOne({telefono:comercio.telefono},{ password: 0}, (err, comercioFilter) => {
                 // generar token
-              const accessToken = jwt.sign({ user: clienteFilter.telefono, role:response.role }, process.env.TOKEN_SECRET,{ expiresIn: '86400s' });
-              res.send({ mensaje: "Success", token:accessToken, data: clienteFilter});
+              const accessToken = jwt.sign({ user: comercioFilter.telefono, role:response.role }, process.env.TOKEN_SECRET,{ expiresIn: '86400s' });
+              res.send({ mensaje: "Success", token:accessToken, data: comercioFilter});
             })
           
           } else{
