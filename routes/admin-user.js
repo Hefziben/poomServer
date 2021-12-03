@@ -110,7 +110,7 @@ router.get("/:id", (req, res) => {
       if (user.role == "Admin") {
         //process request
   var adminId = req.params.id;
-  Admin.findById(adminId)
+  Admin.findById(adminId,{ contrasena: 0},)
     .exec()
     .then(data => res.status(200).send(data))
     .catch(err => res.status(400).send(err));
