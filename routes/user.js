@@ -54,7 +54,7 @@ router.post("/", (req, res) => {
 //get User by ID
 router.get("/:id", (req, res) => {
   var userId = req.params.id;
-  User.findById(userId)
+  User.findById(userId,{ contrasena: 0})
     .exec()
     .then(data => res.status(200).send(data))
     .catch(err => res.status(400).send(err));
@@ -63,7 +63,7 @@ router.get("/:id", (req, res) => {
 /* Veryfi user. */
 router.post("/verify/", function(req, res, next) {
   const user = req.body;
-  User.findOne({ telefono: user.telefono}, (err, data) => {
+  User.findOne({ telefono: user.telefono},{ contrasena: 0}, (err, data) => {
     if (res.status == 400) {
       res.send({ mensaje: "error in get request", res: err });
     } else {
@@ -79,7 +79,7 @@ router.post("/verify/", function(req, res, next) {
 //Update User
 router.put("/:id", (req, res) => {
   const userId = req.params.id;
-User.findByIdAndUpdate(userId, { $set: req.body }, { new: true })
+User.findByIdAndUpdate(userId, { contrasena: 0}, { $set: req.body }, { new: true })
   .then(data => res.status(200).send(data))
   .catch(err => res.status(400).send(null));     
   // const authHeader = req.headers.authorization;
@@ -110,7 +110,6 @@ const file = req.file;
 const update = {
   imagen: file.path,
 };
-console.log(update);
 
 
 User.findByIdAndUpdate(userId, { $set: update }, { new: true })
@@ -252,7 +251,7 @@ User.findByIdAndDelete(userId)
 
 });
 
-//delete User
+//make payment
  router.post("/makePayment", (req, res) => {
   const body = req.body
   const authHeader = req.headers.authorization;

@@ -236,8 +236,7 @@ router.post("/login", function(req, res, next) {
       res.send({ mensaje: "error in get request", res: err });
     } else {
       if (response) {
-        console.log(comercio.password, response.password);
-        bcrypt.compare(comercio.password, response.password, function(err, result) {
+          bcrypt.compare(comercio.password, response.password, function(err, result) {
           if (result) {
             Comercio.findOne({telefono:comercio.telefono},{ password: 0}, (err, userFilter) => {
                 // generar token
@@ -259,6 +258,19 @@ router.post("/login", function(req, res, next) {
   });
 });
 
+router.put("/password/:id", (req, res) => {
+  const comercioId = req.params.id;
+  const comercio = req.body;
+  bcrypt.hash(comercio.password, saltRounds, function(err, hash) {
+   comercio.password = hash;
+   User.findByIdAndUpdate(comercioId, { $set: comercio }, { new: true })
+   .then(() => res.status(200).send({mensaje:'Contrasena cambiada con exito'}))
+   .catch(err => res.status(400).send(err));
+});
+
+});
+
+
 /* Veryfi comercio. */
 router.post("/verify/", function(req, res, next) {
   const user = req.body;
@@ -276,23 +288,23 @@ router.post("/verify/", function(req, res, next) {
   });
 });
 
-router.get("/updatePasswords/:id", (req, res) => {
-  Comercio.find({}, (err, users) => {
-    console.log(err);
-    if (res.status == 400) {
-      res.send({ mensaje: "error in get request", res: err });
-    } else {
-    users.forEach(item =>{
-      bcrypt.hash(item.password, saltRounds, function(err, hash) {
-        item.password = hash;
-        console.log(item.password);
-        Comercio.findByIdAndUpdate(item._id, { $set: item }, { new: true })
-        .then(() => console.log('Contrasena cambiada con exito'))
-        .catch(err => res.status(400).send(err));
-     });
-    })
-    }
-  });
-})
+// router.get("/updatePasswords/:id", (req, res) => {
+//   Comercio.find({}, (err, users) => {
+//     console.log(err);
+//     if (res.status == 400) {
+//       res.send({ mensaje: "error in get request", res: err });
+//     } else {
+//     users.forEach(item =>{
+//       bcrypt.hash(item.password, saltRounds, function(err, hash) {
+//         item.password = hash;
+//         console.log(item.password);
+//         Comercio.findByIdAndUpdate(item._id, { $set: item }, { new: true })
+//         .then(() => console.log('Contrasena cambiada con exito'))
+//         .catch(err => res.status(400).send(err));
+//      });
+//     })
+//     }
+//   });
+// })
 
 module.exports = router;
