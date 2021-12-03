@@ -230,7 +230,7 @@ router.post("/login/", function(req, res, next) {
   
   const comercio = req.body;
   Comercio.find({telefono:comercio.telefono}, (err, response) => {
-    console.log(response.password);
+    console.log(response);
     // const comercio = response.filter(a => a.telefono == comercio.telefono && a.password == comercio.password);
     // console.log(comercio);
     if (res.status == 400) {
