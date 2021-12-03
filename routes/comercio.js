@@ -226,24 +226,23 @@ router.delete("/:id", (req, res) => {
   }
 });
 
-router.post("/login/", function(req, res, next) {
+router.post("/login", function(req, res, next) {
   
   const comercio = req.body;
-  Comercio.find({telefono:comercio.telefono}, (err, response) => {
-    console.log(response);
-    // const comercio = response.filter(a => a.telefono == comercio.telefono && a.password == comercio.password);
-    // console.log(comercio);
+
+  Comercio.findOne({telefono:comercio.telefono}, (err, response) => {
+
     if (res.status == 400) {
       res.send({ mensaje: "error in get request", res: err });
     } else {
       if (response) {
+        console.log(comercio.password, response.password);
         bcrypt.compare(comercio.password, response.password, function(err, result) {
-          console.log(result);
           if (result) {
-            Comercio.findOne({telefono:comercio.telefono},{ password: 0}, (err, comercioFilter) => {
+            Comercio.findOne({telefono:user.telefono},{ password: 0}, (err, userFilter) => {
                 // generar token
-              const accessToken = jwt.sign({ user: comercioFilter.telefono, role:response.role }, process.env.TOKEN_SECRET,{ expiresIn: '86400s' });
-              res.send({ mensaje: "Success", token:accessToken, data: comercioFilter});
+              const accessToken = jwt.sign({ user: userFilter.telefono,  role:response.role }, process.env.TOKEN_SECRET,{ expiresIn: '86400s' });
+              res.send({ mensaje: "Success", token:accessToken, data: userFilter});
             })
           
           } else{
@@ -251,6 +250,7 @@ router.post("/login/", function(req, res, next) {
           }
          
       });
+   
       } else{
         res.send({ data: "credenciales incorrectas 1" }); 
       }
@@ -283,8 +283,8 @@ router.get("/updatePasswords/:id", (req, res) => {
       res.send({ mensaje: "error in get request", res: err });
     } else {
     users.forEach(item =>{
-      bcrypt.hash("Contrasena", saltRounds, function(err, hash) {
-        item.password = "Contrasena";
+      bcrypt.hash(item.password, saltRounds, function(err, hash) {
+        item.password = hash;
         console.log(item.password);
         Comercio.findByIdAndUpdate(item._id, { $set: item }, { new: true })
         .then(() => console.log('Contrasena cambiada con exito'))
