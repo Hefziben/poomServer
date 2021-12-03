@@ -172,7 +172,7 @@ router.put("/:id", (req, res) => {
   console.log(comercioId);
   console.log(req.body);
 
-  Comercio.findByIdAndUpdate(comercioId, { password: 0},{ $set: req.body },{ new: true }).select({password: 0, __v: 0 }).exec()
+  Comercio.findByIdAndUpdate(comercioId,{ $set: req.body },{ new: true }).select({password: 0, __v: 0 }).exec()
     .then((data) => res.status(200).send({mensaje:"Actualizado",update:data}))
     .catch((err) => res.status(400).send(err));
 });
