@@ -13,6 +13,10 @@ const comercioSchema = new Schema(
     tipo: { type: String},
     password:{ type: String, default:'contrasena'},
     cliente_tipo:{ type: String, default:'comercio'},
+    cuenta_banco:{ type: String, default:''},
+    cuanta_numero:{ type: String, default:''},
+    cuanta_nombre:{ type: String, default:''},
+    cuanta_tipo:{ type: String, default:''},
     ubicacion: [
         {
             lat:{ type: Number},
