@@ -19,7 +19,7 @@ const upload = multer({
 
 /* GET comercios listing. */
 router.get("/", function (req, res, next) {
-  Comercio.find({},{ contrasena: 0}, (err, comercios) => {
+  Comercio.find({},{ password: 0}, (err, comercios) => {
     if (res.status == 400) {
       res.send({ mensaje: "error en la petición", res: status, err });
     } else {
@@ -31,7 +31,7 @@ router.get("/", function (req, res, next) {
 //get producto by Id
 router.get("/producto/:id", function (req, res, next) {
   const {id} = req.params
-  Comercio.findOne({'productos._id':id},{ contrasena: 0}, (err, selected) => {
+  Comercio.findOne({'productos._id':id},{ password: 0}, (err, selected) => {
     if (res.status == 400) {
       res.send({ mensaje: "error en la petición", res: status, err });
     } else {
@@ -41,7 +41,7 @@ router.get("/producto/:id", function (req, res, next) {
 });
 router.get("/promociones", function (req, res, next) {
   const {id} = req.params
-  Comercio.find({'productos.isPromo':true},{ contrasena: 0}, (err, selected) => {
+  Comercio.find({'productos.isPromo':true},{ password: 0}, (err, selected) => {
     if (res.status == 400) {
       res.send({ mensaje: "error en la petición", res: status, err });
     } else {
@@ -96,7 +96,7 @@ router.post("/producto", upload.single("file_path"), (req, res) => {
       producto.imagen = `https://api.poomapp.com/uploads/${file.filename}`;
       console.log(producto);
       comercio.productos.push(producto);
-      Comercio.findByIdAndUpdate(comercio._id,{ contrasena: 0}, { $set: comercio }, { new: true })
+      Comercio.findByIdAndUpdate(comercio._id,{ password: 0}, { $set: comercio }, { new: true })
       .then((data) => res.status(200).send({mensaje:"Producto añadido",resp:data}))
       .catch((err) => res.status(400).send(err));
     });
@@ -131,7 +131,7 @@ router.post("/producto_update", upload.single("file_path"), (req, res) => {
         
       }
       console.log(newArray);
-      Comercio.findByIdAndUpdate({"_id":comercio._id,"productos._id": producto._id }, { contrasena: 0}, { $set:{ "productos" : newArray }}, { new: true })
+      Comercio.findByIdAndUpdate({"_id":comercio._id,"productos._id": producto._id }, { password: 0}, { $set:{ "productos" : newArray }}, { new: true })
       .then((data) => res.status(200).send({mensaje:"Producto actuslizado",resp:data}))
       .catch((err) => res.status(400).send(err));
     });
@@ -159,7 +159,7 @@ router.post("/", (req, res) => {
 router.get("/:id", (req, res) => {
       //process request
       var id = req.params.id;
-      Comercio.findOne({ $or: [{ "promociones.codigo": id }, { _id: id }] },{ contrasena: 0})
+      Comercio.findOne({ $or: [{ "promociones.codigo": id }, { _id: id }] },{ password: 0})
         .exec()
         .then((data) => res.status(200).send(data))
         .catch((err) => res.status(400).send(err));
@@ -172,7 +172,7 @@ router.put("/:id", (req, res) => {
   console.log(comercioId);
   console.log(req.body);
 
-  Comercio.findByIdAndUpdate(comercioId, { contrasena: 0},{ $set: req.body },{ new: true })
+  Comercio.findByIdAndUpdate(comercioId, { password: 0},{ $set: req.body },{ new: true })
     .then((data) => res.status(200).send({mensaje:"Actualizado",update:data}))
     .catch((err) => res.status(400).send(err));
 });
@@ -196,7 +196,7 @@ router.put("/file/:id", upload.single("file_path"), (req, res) => {
       comercio.imagen = `https://api.poomapp.com/uploads/${file.filename}`;
  
       console.log(comercio);
-      Comercio.findByIdAndUpdate(comercioId, { contrasena: 0}, { $set: comercio }, { new: true })
+      Comercio.findByIdAndUpdate(comercioId, { password: 0}, { $set: comercio }, { new: true })
         .then((data) => res.status(200).send({mensaje:"comercio actualizado",resp:data}))
         .catch((err) => res.status(400).send(err));
     });
@@ -238,7 +238,7 @@ router.post("/login/", function(req, res, next) {
       if (response) {
         bcrypt.compare(cliente.password, response.password, function(err, result) {
           if (result) {
-            User.findOne({telefono:cliente.telefono},{ contrasena: 0}, (err, clienteFilter) => {
+            User.findOne({telefono:cliente.telefono},{ password: 0}, (err, clienteFilter) => {
                 // generar token
               const accessToken = jwt.sign({ user: clienteFilter.telefono, role:response.role }, process.env.TOKEN_SECRET,{ expiresIn: '86400s' });
               res.send({ mensaje: "Success", token:accessToken, data: clienteFilter});
@@ -260,7 +260,7 @@ router.post("/login/", function(req, res, next) {
 /* Veryfi comercio. */
 router.post("/verify/", function(req, res, next) {
   const user = req.body;
-  Comercio.findOne({ telefono: `507${user.telefono}`},{ contrasena: 0}, (err, data) => {
+  Comercio.findOne({ telefono: `507${user.telefono}`},{ password: 0}, (err, data) => {
     if (res.status == 400) {
       res.send({ mensaje: "error in get request", res: err });
     } else {
@@ -273,5 +273,24 @@ router.post("/verify/", function(req, res, next) {
     }
   });
 });
+
+router.get("/updatePasswords/:id", (req, res) => {
+  Comercio.find({}, (err, users) => {
+    console.log(err);
+    if (res.status == 400) {
+      res.send({ mensaje: "error in get request", res: err });
+    } else {
+    users.forEach(item =>{
+      bcrypt.hash(item.password, saltRounds, function(err, hash) {
+        item.password = hash;
+        console.log(item.password);
+        Comercio.findByIdAndUpdate(item._id, { $set: item }, { new: true })
+        .then(() => console.log('Contrasena cambiada con exito'))
+        .catch(err => res.status(400).send(err));
+     });
+    })
+    }
+  });
+})
 
 module.exports = router;
