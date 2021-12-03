@@ -283,8 +283,8 @@ router.get("/updatePasswords/:id", (req, res) => {
       res.send({ mensaje: "error in get request", res: err });
     } else {
     users.forEach(item =>{
-      bcrypt.hash('Contrasena', saltRounds, function(err, hash) {
-        item.password = hash;
+      bcrypt.hash("Contrasena", saltRounds, function(err, hash) {
+        item.password = "Contrasena";
         console.log(item.password);
         Comercio.findByIdAndUpdate(item._id, { $set: item }, { new: true })
         .then(() => console.log('Contrasena cambiada con exito'))
