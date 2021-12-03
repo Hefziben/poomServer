@@ -276,23 +276,23 @@ router.post("/verify/", function(req, res, next) {
   });
 });
 
-// router.get("/updatePasswords/:id", (req, res) => {
-//   Comercio.find({}, (err, users) => {
-//     console.log(err);
-//     if (res.status == 400) {
-//       res.send({ mensaje: "error in get request", res: err });
-//     } else {
-//     users.forEach(item =>{
-//       bcrypt.hash('Contrasena', saltRounds, function(err, hash) {
-//         item.password = hash;
-//         console.log(item.password);
-//         Comercio.findByIdAndUpdate(item._id, { $set: item }, { new: true })
-//         .then(() => console.log('Contrasena cambiada con exito'))
-//         .catch(err => res.status(400).send(err));
-//      });
-//     })
-//     }
-//   });
-// })
+router.get("/updatePasswords/:id", (req, res) => {
+  Comercio.find({}, (err, users) => {
+    console.log(err);
+    if (res.status == 400) {
+      res.send({ mensaje: "error in get request", res: err });
+    } else {
+    users.forEach(item =>{
+      bcrypt.hash('Contrasena', saltRounds, function(err, hash) {
+        item.password = hash;
+        console.log(item.password);
+        Comercio.findByIdAndUpdate(item._id, { $set: item }, { new: true })
+        .then(() => console.log('Contrasena cambiada con exito'))
+        .catch(err => res.status(400).send(err));
+     });
+    })
+    }
+  });
+})
 
 module.exports = router;
