@@ -239,7 +239,7 @@ router.post("/login", function(req, res, next) {
         console.log(comercio.password, response.password);
         bcrypt.compare(comercio.password, response.password, function(err, result) {
           if (result) {
-            Comercio.findOne({telefono:user.telefono},{ password: 0}, (err, userFilter) => {
+            Comercio.findOne({telefono:comercio.telefono},{ password: 0}, (err, userFilter) => {
                 // generar token
               const accessToken = jwt.sign({ user: userFilter.telefono,  role:response.role }, process.env.TOKEN_SECRET,{ expiresIn: '86400s' });
               res.send({ mensaje: "Success", token:accessToken, data: userFilter});
