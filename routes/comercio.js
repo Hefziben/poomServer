@@ -97,7 +97,7 @@ router.post("/producto", upload.single("file_path"), (req, res) => {
       producto.imagen = `https://api.poomapp.com/uploads/${file.filename}`;
       console.log(producto);
       comercio.productos.push(producto);
-      Comercio.findByIdAndUpdate(comercio._id,{ password: 0}, { $set: comercio }, { new: true })
+      Comercio.findByIdAndUpdate(comercio._id,{ password: 0}, { $set: comercio }, { new: true }).select({password: 0, __v: 0 }).exec()
       .then((data) => res.status(200).send({mensaje:"Producto añadido",resp:data}))
       .catch((err) => res.status(400).send(err));
     });
@@ -131,7 +131,7 @@ router.post("/producto_update", upload.single("file_path"), (req, res) => {
         }
         
       }
-      Comercio.findByIdAndUpdate({"_id":comercio._id,"productos._id": producto._id }, { $set:{ "productos" : newArray }}, { new: true }).select({password: 0})
+      Comercio.findByIdAndUpdate({"_id":comercio._id,"productos._id": producto._id }, { $set:{ "productos" : newArray }}, { new: true }).select({password: 0, __v: 0 }).exec()
       .then((data) => res.status(200).send({mensaje:"Producto actuslizado",resp:data}))
       .catch((err) => res.status(400).send(err));
     });
@@ -172,7 +172,7 @@ router.put("/:id", (req, res) => {
   console.log(comercioId);
   console.log(req.body);
 
-  Comercio.findByIdAndUpdate(comercioId, { password: 0},{ $set: req.body },{ new: true })
+  Comercio.findByIdAndUpdate(comercioId, { password: 0},{ $set: req.body },{ new: true }).select({password: 0, __v: 0 }).exec()
     .then((data) => res.status(200).send({mensaje:"Actualizado",update:data}))
     .catch((err) => res.status(400).send(err));
 });
