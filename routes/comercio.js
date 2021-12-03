@@ -229,8 +229,8 @@ router.delete("/:id", (req, res) => {
 router.post("/login/", function(req, res, next) {
   
   const cliente = req.body;
-  Comercio.find({'telefono':cliente.telefono}, (err, response) => {
-    console.log(cliente);
+  Comercio.find({telefono:cliente.telefono}, (err, response) => {
+    console.log(response.password);
     // const comercio = response.filter(a => a.telefono == cliente.telefono && a.password == cliente.password);
     // console.log(comercio);
     if (res.status == 400) {
@@ -246,12 +246,12 @@ router.post("/login/", function(req, res, next) {
             })
           
           } else{
-            res.send({ mensaje: "credenciales incorrectas", result: result});
+            res.send({ mensaje: "credenciales incorrectas 2", result: result});
           }
          
       });
       } else{
-        res.send({ data: "credenciales incorrectas" }); 
+        res.send({ data: "credenciales incorrectas 1" }); 
       }
 
     }
