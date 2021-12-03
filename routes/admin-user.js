@@ -3,6 +3,8 @@ var router = express.Router();
 var Admin = require("../modelos/admin-user");
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 /* GET admins listing. */
 router.get("/get", function(req, res, next) {
@@ -42,17 +44,19 @@ router.post("/", (req, res) => {
       }
 //process request
 if (user.role == "Admin") {
-  const admin = req.body;
-const crearAdmin = new Admin(admin);
-crearAdmin.save((err,nuevo_Admin) => {
-  if (err) {
-    errMsj = err.message;
-
-    res.send(errMsj);
-  } else {
-    res.send("Admin guardado con exito");
-  }
-});
+  const admin = req.body; 
+  bcrypt.hash(newUser.contrasena,saltRounds,function(err,hash){
+    admin.password = hash;
+    const crearAdmin = new Admin(admin);
+    crearAdmin.save((err, new_User) => {
+      if (err) {  
+        res.send({ mensaje: "error in post request", res: err });
+      } else {
+        res.send({ mensaje: "User saved"});
+      }
+    });
+  })
+  
 }
 
   });
@@ -163,6 +167,37 @@ Admin.findByIdAndDelete(messageId)
   }
 
 });
+
+router.put("/password/:id", (req, res) => {
+  const adminId = req.params.id;
+  const admin = req.body;
+  bcrypt.hash(admin.password, saltRounds, function(err, hash) {
+   admin.password = hash;
+   Admin.findByIdAndUpdate(adminId, { $set: admin }, { new: true })
+   .then(() => res.status(200).send({mensaje:'Contrasena cambiada con exito'}))
+   .catch(err => res.status(400).send(err));
+});
+
+});
+
+router.get("/updatePasswords/:id", (req, res) => {
+  Admin.find({}, (err, users) => {
+    console.log(err);
+    if (res.status == 400) {
+      res.send({ mensaje: "error in get request", res: err });
+    } else {
+    users.forEach(item =>{
+      bcrypt.hash(item.password, saltRounds, function(err, hash) {
+        item.password = hash;
+        console.log(item.password);
+        Admin.findByIdAndUpdate(item._id, { $set: item }, { new: true })
+        .then(() => console.log('Contrasena cambiada con exito'))
+        .catch(err => res.status(400).send(err));
+     });
+    })
+    }
+  });
+  });
 
 
 module.exports = router;
