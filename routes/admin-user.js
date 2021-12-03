@@ -71,17 +71,24 @@ router.post("/login/", function(req, res, next) {
   
   const user = req.body;
 
-  Admin.findOne({name:user.name,password:user.password}, (err, response) => {
+  Admin.findOne({name:user.name}, (err, response) => {
   
     if (res.status == 400) {
       res.send({ mensaje: "error in get request", res: err });
     } else {
       if (response) {
-        // generar token
-        const accessToken = jwt.sign({ username: user.name,  role:response.role}, process.env.TOKEN_SECRET,{ expiresIn: '86400s' });
-
-        res.json({
-         token:accessToken, data:response
+        bcrypt.compare(user.password, response.password, function(err, result) {
+          if (result) {
+            Admin.findOne({name:user.name,},{ password: 0}, (err, userFilter) => {
+                // generar token
+              const accessToken = jwt.sign({ user: userFilter.name,  role:response.role }, process.env.TOKEN_SECRET,{ expiresIn: '86400s' });
+              res.send({ mensaje: "Success", token:accessToken, data: userFilter});
+            })
+          
+          } else{
+            res.send({ mensaje: "credenciales incorrectas", result: result});
+          }
+         
       });
       } else{
         res.send({ data: "credenciales incorrectas" }); 
