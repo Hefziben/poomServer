@@ -132,7 +132,7 @@ router.post("/producto_update", upload.single("file_path"), (req, res) => {
         
       }
       console.log(newArray);
-      Comercio.findByIdAndUpdate({"_id":comercio._id,"productos._id": producto._id }, { $set:{ "productos" : newArray }}, { new: true, password: 0})
+      Comercio.findByIdAndUpdate({"_id":comercio._id,"productos._id": producto._id }, { $set:{ "productos" : newArray }}, { new: true }).select({password: 0, __v: 0 }).exec()
       .then((data) => res.status(200).send({mensaje:"Producto actuslizado",resp:data}))
       .catch((err) => res.status(400).send(err));
     });
