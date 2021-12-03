@@ -8,7 +8,7 @@ const saltRounds = 10;
 
 /* GET admins listing. */
 router.get("/get", function(req, res, next) {
-  Admin.find({}, (err, admins) => {
+  Admin.find({},{ password: 0}, (err, admins) => {
     if (res.status == 400) {
       res.send({ mensaje: "error en la petición", res: status, err });
     } else {
@@ -187,24 +187,24 @@ router.put("/password/:id", (req, res) => {
 
 });
 
-router.get("/updatePasswords/:id", (req, res) => {
-  Admin.find({}, (err, users) => {
-    console.log(err);
-    if (res.status == 400) {
-      res.send({ mensaje: "error in get request", res: err });
-    } else {
-    users.forEach(item =>{
-      bcrypt.hash(item.password, saltRounds, function(err, hash) {
-        item.password = hash;
-        console.log(item.password);
-        Admin.findByIdAndUpdate(item._id, { $set: item }, { new: true })
-        .then(() => console.log('Contrasena cambiada con exito'))
-        .catch(err => res.status(400).send(err));
-     });
-    })
-    }
-  });
-  });
+// router.get("/updatePasswords/:id", (req, res) => {
+//   Admin.find({}, (err, users) => {
+//     console.log(err);
+//     if (res.status == 400) {
+//       res.send({ mensaje: "error in get request", res: err });
+//     } else {
+//     users.forEach(item =>{
+//       bcrypt.hash(item.password, saltRounds, function(err, hash) {
+//         item.password = hash;
+//         console.log(item.password);
+//         Admin.findByIdAndUpdate(item._id, { $set: item }, { new: true })
+//         .then(() => console.log('Contrasena cambiada con exito'))
+//         .catch(err => res.status(400).send(err));
+//      });
+//     })
+//     }
+//   });
+//   });
 
 
 module.exports = router;
