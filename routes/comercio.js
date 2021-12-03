@@ -4,7 +4,8 @@ var Comercio = require("../modelos/comercio");
 const multer = require("multer");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads");
