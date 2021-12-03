@@ -20,7 +20,7 @@ const upload = multer({
 
 /* GET comercios listing. */
 router.get("/", function (req, res, next) {
-  Comercio.find({},{ password: 0}, (err, comercios) => {
+  Comercio.find({},{ password: 0, __v: 0}, (err, comercios) => {
     if (res.status == 400) {
       res.send({ mensaje: "error en la petición", res: status, err });
     } else {
@@ -32,7 +32,7 @@ router.get("/", function (req, res, next) {
 //get producto by Id
 router.get("/producto/:id", function (req, res, next) {
   const {id} = req.params
-  Comercio.findOne({'productos._id':id},{ password: 0}, (err, selected) => {
+  Comercio.findOne({'productos._id':id},{ password: 0, __v: 0}, (err, selected) => {
     if (res.status == 400) {
       res.send({ mensaje: "error en la petición", res: status, err });
     } else {
@@ -42,7 +42,7 @@ router.get("/producto/:id", function (req, res, next) {
 });
 router.get("/promociones", function (req, res, next) {
   const {id} = req.params
-  Comercio.find({'productos.isPromo':true},{ password: 0}, (err, selected) => {
+  Comercio.find({'productos.isPromo':true},{ password: 0, __v: 0}, (err, selected) => {
     if (res.status == 400) {
       res.send({ mensaje: "error en la petición", res: status, err });
     } else {
@@ -97,7 +97,7 @@ router.post("/producto", upload.single("file_path"), (req, res) => {
       producto.imagen = `https://api.poomapp.com/uploads/${file.filename}`;
       console.log(producto);
       comercio.productos.push(producto);
-      Comercio.findByIdAndUpdate(comercio._id,{ password: 0}, { $set: comercio }, { new: true }).select({password: 0, __v: 0 }).exec()
+      Comercio.findByIdAndUpdate(comercio._id,{ password: 0, __v: 0}, { $set: comercio }, { new: true }).select({password: 0, __v: 0 }).exec()
       .then((data) => res.status(200).send({mensaje:"Producto añadido",resp:data}))
       .catch((err) => res.status(400).send(err));
     });
@@ -159,7 +159,7 @@ router.post("/", (req, res) => {
 router.get("/:id", (req, res) => {
       //process request
       var id = req.params.id;
-      Comercio.findOne({ $or: [{ "promociones.codigo": id }, { _id: id }] },{ password: 0})
+      Comercio.findOne({ $or: [{ "promociones.codigo": id }, { _id: id }] },{ password: 0, __v: 0})
         .exec()
         .then((data) => res.status(200).send(data))
         .catch((err) => res.status(400).send(err));
@@ -196,7 +196,7 @@ router.put("/file/:id", upload.single("file_path"), (req, res) => {
       comercio.imagen = `https://api.poomapp.com/uploads/${file.filename}`;
  
       console.log(comercio);
-      Comercio.findByIdAndUpdate(comercioId, { password: 0}, { $set: comercio }, { new: true })
+      Comercio.findByIdAndUpdate(comercioId,{ $set: comercio }, { new: true }).select({password: 0, __v: 0 }).exec()
         .then((data) => res.status(200).send({mensaje:"comercio actualizado",resp:data}))
         .catch((err) => res.status(400).send(err));
     });
@@ -237,7 +237,7 @@ router.post("/login", function(req, res, next) {
       if (response) {
           bcrypt.compare(comercio.password, response.password, function(err, result) {
           if (result) {
-            Comercio.findOne({telefono:comercio.telefono},{ password: 0}, (err, userFilter) => {
+            Comercio.findOne({telefono:comercio.telefono},{ password: 0, __v: 0}, (err, userFilter) => {
                 // generar token
               const accessToken = jwt.sign({ user: userFilter.telefono,  role:response.role }, process.env.TOKEN_SECRET,{ expiresIn: '86400s' });
               res.send({ mensaje: "Success", token:accessToken, data: userFilter});
@@ -273,7 +273,7 @@ router.put("/password/:id", (req, res) => {
 /* Veryfi comercio. */
 router.post("/verify/", function(req, res, next) {
   const user = req.body;
-  Comercio.findOne({ telefono: `507${user.telefono}`},{ password: 0}, (err, data) => {
+  Comercio.findOne({ telefono: `507${user.telefono}`},{ password: 0, __v: 0}, (err, data) => {
     if (res.status == 400) {
       res.send({ mensaje: "error in get request", res: err });
     } else {

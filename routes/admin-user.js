@@ -8,7 +8,7 @@ const saltRounds = 10;
 
 /* GET admins listing. */
 router.get("/get", function(req, res, next) {
-  Admin.find({},{ password: 0}, (err, admins) => {
+  Admin.find({},{ password: 0, __v: 0}, (err, admins) => {
     if (res.status == 400) {
       res.send({ mensaje: "error en la petición", res: status, err });
     } else {
@@ -79,7 +79,7 @@ router.post("/login/", function(req, res, next) {
       if (response) {
         bcrypt.compare(user.password, response.password, function(err, result) {
           if (result) {
-            Admin.findOne({name:user.name,},{ password: 0}, (err, userFilter) => {
+            Admin.findOne({name:user.name,},{ password: 0, __v: 0}, (err, userFilter) => {
                 // generar token
               const accessToken = jwt.sign({ user: userFilter.name,  role:response.role }, process.env.TOKEN_SECRET,{ expiresIn: '86400s' });
               res.send({ mensaje: "Success", token:accessToken, data: userFilter});
@@ -110,7 +110,7 @@ router.get("/:id", (req, res) => {
       if (user.role == "Admin") {
         //process request
   var adminId = req.params.id;
-  Admin.findById(adminId,{ contrasena: 0},)
+  Admin.findById(adminId,{ contrasena: 0, __v: 0},)
     .exec()
     .then(data => res.status(200).send(data))
     .catch(err => res.status(400).send(err));

@@ -24,7 +24,7 @@ const upload = multer({
 
 /* GET User listing. */
 router.get("/", function(req, res, next) {
-  User.find({},{ contrasena: 0}, (err, users) => {
+  User.find({},{ contrasena: 0, __v: 0}, (err, users) => {
     if (res.status == 400) {
       res.send({ mensaje: "error in get request", res: err });
     } else {   
@@ -54,7 +54,7 @@ router.post("/", (req, res) => {
 //get User by ID
 router.get("/:id", (req, res) => {
   var userId = req.params.id;
-  User.findById(userId,{ contrasena: 0})
+  User.findById(userId,{ contrasena: 0, __v: 0})
     .exec()
     .then(data => res.status(200).send(data))
     .catch(err => res.status(400).send(err));
@@ -63,7 +63,7 @@ router.get("/:id", (req, res) => {
 /* Veryfi user. */
 router.post("/verify/", function(req, res, next) {
   const user = req.body;
-  User.findOne({ telefono: user.telefono},{ contrasena: 0}, (err, data) => {
+  User.findOne({ telefono: user.telefono},{ contrasena: 0, __v: 0}, (err, data) => {
     if (res.status == 400) {
       res.send({ mensaje: "error in get request", res: err });
     } else {
@@ -79,7 +79,7 @@ router.post("/verify/", function(req, res, next) {
 //Update User
 router.put("/:id", (req, res) => {
   const userId = req.params.id;
-User.findByIdAndUpdate(userId, { contrasena: 0}, { $set: req.body }, { new: true })
+User.findByIdAndUpdate(userId,{ $set: req.body }, { new: true }).select({contrasena: 0, __v: 0 }).exec()
   .then(data => res.status(200).send(data))
   .catch(err => res.status(400).send(null));     
   // const authHeader = req.headers.authorization;
@@ -185,7 +185,7 @@ router.post("/login", function(req, res, next) {
       if (response) {
         bcrypt.compare(user.password, response.contrasena, function(err, result) {
           if (result) {
-            User.findOne({telefono:user.telefono,},{ contrasena: 0}, (err, userFilter) => {
+            User.findOne({telefono:user.telefono,},{ contrasena: 0, __v: 0}, (err, userFilter) => {
                 // generar token
               const accessToken = jwt.sign({ user: userFilter.telefono,  role:response.role }, process.env.TOKEN_SECRET,{ expiresIn: '86400s' });
               res.send({ mensaje: "Success", token:accessToken, data: userFilter});
