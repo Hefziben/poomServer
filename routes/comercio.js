@@ -97,7 +97,7 @@ router.post("/producto", upload.single("file_path"), (req, res) => {
       producto.imagen = `https://api.poomapp.com/uploads/${file.filename}`;
       console.log(producto);
       comercio.productos.push(producto);
-      Comercio.findByIdAndUpdate(comercio._id,{ password: 0, __v: 0}, { $set: comercio }, { new: true }).select({password: 0, __v: 0 }).exec()
+      Comercio.findByIdAndUpdate(comercio._id, { $set: comercio }, { new: true }).select({password: 0, __v: 0 }).exec()
       .then((data) => res.status(200).send({mensaje:"Producto añadido",resp:data}))
       .catch((err) => res.status(400).send(err));
     });
