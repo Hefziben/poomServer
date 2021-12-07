@@ -266,7 +266,7 @@ User.findByIdAndDelete(userId)
         let bytes  = CryptoJS.AES.decrypt(body, process.env.Password);
         let info = bytes.toString(CryptoJS.enc.Utf8);
         console.log(info);
-        return
+        res.send('decrypted')
 //process request
 // const options = {
 //   Auth: {
@@ -295,34 +295,34 @@ User.findByIdAndDelete(userId)
 //     BillingCCType: "Visa",
 //   },
 // }
-axios
-  .post(`${process.env.gatewayUrl}`, {
-    Auth: {
-      ApiKey: process.env.ApiKey
-    },
-    Trans: {
-      Name: `${body.name} ${body.lastname}`
-    },
-    Transactions: [
-      {
-        TransactionType: 'sale',
-        paymentMethod: "Creditcard",
-        Amount: 0.99
-      }
-    ],
-    Payment: {
-      BillingCCNumber: body.cardNumber,
-      BillingCCExp: body.expiration,
-      BillingCvv: body.secret
-    }
-  })
-  .then(function (response) {
-    res.send(response.data);
-  })
-  .catch(error => {
-    res.send(error)
-    console.error('[ ERROR ] ', error)
-  })
+// axios
+//   .post(`${process.env.gatewayUrl}`, {
+//     Auth: {
+//       ApiKey: process.env.ApiKey
+//     },
+//     Trans: {
+//       Name: `${body.name} ${body.lastname}`
+//     },
+//     Transactions: [
+//       {
+//         TransactionType: 'sale',
+//         paymentMethod: "Creditcard",
+//         Amount: 0.99
+//       }
+//     ],
+//     Payment: {
+//       BillingCCNumber: body.cardNumber,
+//       BillingCCExp: body.expiration,
+//       BillingCvv: body.secret
+//     }
+//   })
+//   .then(function (response) {
+//     res.send(response.data);
+//   })
+//   .catch(error => {
+//     res.send(error)
+//     console.error('[ ERROR ] ', error)
+//   })
       }
 
 
