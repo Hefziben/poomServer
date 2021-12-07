@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt');
+const CryptoJS = require("crypto-js");
 const saltRounds = 10;
 require('dotenv').config()
 
@@ -262,6 +263,10 @@ User.findByIdAndDelete(userId)
           return res.sendStatus(403);
       }
       if (user.role == "User") {
+        let bytes  = CryptoJS.AES.decrypt(body, process.env.Password);
+        let info = bytes.toString(CryptoJS.enc.Utf8);
+        console.log(info);
+        return
 //process request
 // const options = {
 //   Auth: {
