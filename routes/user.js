@@ -266,7 +266,7 @@ User.findByIdAndDelete(userId)
         let bytes  = CryptoJS.AES.decrypt(body, process.env.Password);
         let info = bytes.toString(CryptoJS.enc.Utf8);
         console.log(info);
-        res.send('decrypted')
+        res.send(info)
 //process request
 // const options = {
 //   Auth: {
