@@ -263,7 +263,7 @@ User.findByIdAndDelete(userId)
           return res.sendStatus(403);
       }
       if (user.role == "User") {
- let bytes = CryptoJS.AES.decrypt(req.body,"qlioullgew104.131.24.46kosxwabgjv");
+ let bytes = CryptoJS.AES.decrypt(req.body,"qlioullgew1041312446kosxwabgjv");
  let decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8))
   res.send({response:decryptedData})//process request
 // const options = {
