@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var User = require("../modelos/user");
 const multer = require("multer");
+require('dotenv').config()
 const { param } = require("./promo");
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
@@ -9,7 +10,7 @@ const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt');
 const CryptoJS = require("crypto-js");
 const saltRounds = 10;
-require('dotenv').config()
+
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -263,7 +264,9 @@ User.findByIdAndDelete(userId)
           return res.sendStatus(403);
       }
       if (user.role == "User") {
- let bytes = CryptoJS.AES.decrypt(body.encripted,"qlioullgew1041312446kosxwabgjv");
+ const password = process.env.PASSWORD;
+ console.log(password);     
+ let bytes = CryptoJS.AES.decrypt(body.encripted, password);
  let decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8))
   res.send({response:decryptedData})//process request
   return
