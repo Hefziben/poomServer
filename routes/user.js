@@ -267,10 +267,7 @@ User.findByIdAndDelete(userId)
  let password = process.env.PASS_KEY
  console.log(password);     
  let bytes = CryptoJS.AES.decrypt(body.encripted, password);
- let decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8))
-  res.send({response:decryptedData})//process request
-  return
-  
+ let decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8))  
 const details = {
   Auth: {
     ApiKey: process.env.APIKEY
