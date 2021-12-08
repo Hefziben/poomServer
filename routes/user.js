@@ -264,7 +264,7 @@ User.findByIdAndDelete(userId)
           return res.sendStatus(403);
       }
       if (user.role == "User") {
- const password = process.env.PASSWORD;
+ let password = process.env.TOKEN_SECRET;
  console.log(password);     
  let bytes = CryptoJS.AES.decrypt(body.encripted, password);
  let decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8))
