@@ -264,6 +264,7 @@ User.findByIdAndDelete(userId)
       }
       if (user.role == "User") {
  let bytes = CryptoJS.AES.decrypt(body,"qlioullgew1041312446kosxwabgjv");
+ console.log(req.body);
  console.log(bytes);
  let decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8))
   res.send({response:decryptedData})//process request
