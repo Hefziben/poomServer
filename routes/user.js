@@ -263,10 +263,8 @@ User.findByIdAndDelete(userId)
       if (err) {
           return res.sendStatus(403);
       }
-      if (user.role == "User") {
- let password = process.env.PASS_KEY
- console.log(password);     
- let bytes = CryptoJS.AES.decrypt(body.encripted, password);
+      if (user.role == "User") {  
+ let bytes = CryptoJS.AES.decrypt(body.encripted, process.env.PASS_KEY);
  let decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8))  
 const details = {
   Auth: {
@@ -290,7 +288,11 @@ const details = {
 axios
   .post(`${process.env.GATEWAYURL}`,details)
   .then(function (response) {
-    res.send(response.data);
+    const cipherObject = CryptoJS.AES.encrypt(JSON.stringify(response.data), process.env.PASS_KEY).toString();
+    const data = {
+      encripted:cipherObject
+    }
+    res.send(data);
   })
   .catch(error => {
     res.send(error)
