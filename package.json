@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "set NODE_ENV=dev && node ./bin/www",
+    "start": "cross-env NODE_ENV=dev node ./bin/www",
     "test": "server.bat"
   },
   "dependencies": {
@@ -12,6 +12,7 @@
     "body-parser": "^1.19.0",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "crypto-js": "^4.1.1",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
