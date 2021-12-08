@@ -268,61 +268,36 @@ User.findByIdAndDelete(userId)
  console.log(bytes);
  let decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8))
   res.send({response:decryptedData})//process request
-// const options = {
-//   Auth: {
-//     ApiKey: process.env.ApiKey,
-//   },
 
-//   Transactions: [
-//     {
-//       TransactionType: "sale",
   
-//       Amount: body.amount
-//     }
-//   ],
-
-//   Payment: {
-//     BillingCCNumber:body.cardNumber,
-
-//     BillingCCExp: body.expiration,
-
-//     BillingCvv: body.secret,
-
-//     BillingFirstName: body.name,
-
-//     BillingLastName: body.lastname,
-
-//     BillingCCType: "Visa",
-//   },
-// }
-// axios
-//   .post(`${process.env.gatewayUrl}`, {
-//     Auth: {
-//       ApiKey: process.env.ApiKey
-//     },
-//     Trans: {
-//       Name: `${body.name} ${body.lastname}`
-//     },
-//     Transactions: [
-//       {
-//         TransactionType: 'sale',
-//         paymentMethod: "Creditcard",
-//         Amount: 0.99
-//       }
-//     ],
-//     Payment: {
-//       BillingCCNumber: body.cardNumber,
-//       BillingCCExp: body.expiration,
-//       BillingCvv: body.secret
-//     }
-//   })
-//   .then(function (response) {
-//     res.send(response.data);
-//   })
-//   .catch(error => {
-//     res.send(error)
-//     console.error('[ ERROR ] ', error)
-//   })
+const details = {
+  Auth: {
+    ApiKey: process.env.APIKEY
+  },
+  Trans: {
+    Name: `${decryptedData.name} ${decryptedData.lastname}`
+  },
+  Transactions: [
+    {
+      TransactionType: 'sale',
+      Amount: decryptedData.amount
+    }
+  ],
+  Payment: {
+    BillingCCNumber: decryptedData.cardNumber,
+    BillingCCExp: decryptedData.expiration,
+    BillingCvv: decryptedData.secret
+  }
+}
+axios
+  .post(`${process.env.GATEWAYURL}`,details)
+  .then(function (response) {
+    res.send(response.data);
+  })
+  .catch(error => {
+    res.send(error)
+    console.error('[ ERROR ] ', error)
+  })
       }
 
 
