@@ -265,8 +265,7 @@ User.findByIdAndDelete(userId)
       if (user.role == "User") {
  const bytes  = CryptoJS.AES.decrypt(body,process.env.Password);
  const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
- console.log(decryptedData);
-  res.send(info)//process request
+  res.send(decryptedData)//process request
 // const options = {
 //   Auth: {
 //     ApiKey: process.env.ApiKey,
