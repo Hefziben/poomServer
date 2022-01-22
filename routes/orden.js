@@ -50,7 +50,8 @@ router.post("/", (req, res) => {
     console.log(token);
     jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
       if (err) {
-        return res.sendStatus(403);
+        ;
+        return res.sendStatus(err);
       }
 
       //process request
