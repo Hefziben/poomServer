@@ -47,9 +47,9 @@ router.post("/", (req, res) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
     const token = authHeader.split(" ")[1];
-    var decoded = jwt.verify(token,  process.env.TOKEN_SECRET);
+    var decoded = jwt.verify(token,process.env.TOKEN_SECRET);
     console.log(decoded) // bar
-    res.send(decoded);
+    //res.send(decoded);
     // jwt.verify(token,process.env.TOKEN_SECRET, (err, user) => {
     //   if (err) {
     //     return res.sendStatus(403);
