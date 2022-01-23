@@ -192,7 +192,8 @@ router.post("/login", function(req, res, next) {
                 // generar token
               const accessToken = jwt.sign({ user: userFilter.telefono,  role:response.role }, process.env.TOKEN_SECRET,{ expiresIn: '1h' });
               var reaponse = jwt.verify(accessToken,  process.env.TOKEN_SECRET);
-              console.log(reaponse) // bar
+              console.log(reaponse)
+              console.log(accessToken); // bar
               res.send({ mensaje: "Success", token:accessToken, data: userFilter});
 
             })
