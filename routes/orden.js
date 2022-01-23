@@ -48,9 +48,11 @@ router.post("/", (req, res) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
     const token = authHeader.split(" ")[1];
+    var decoded = jwt.verify(token,  process.env.TOKEN_SECRET);
+              console.log(decoded)
     jwt.verify(token,process.env.TOKEN_SECRET, (err, user) => {
       if (err) {
-        return res.send(err);
+        return res.statusCode(403);
       }
 
       //process request
