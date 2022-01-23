@@ -191,8 +191,8 @@ router.post("/login", function(req, res, next) {
             User.findOne({telefono:user.telefono,},{ contrasena: 0, __v: 0}, (err, userFilter) => {
                 // generar token
               const accessToken = jwt.sign({ user: userFilter.telefono,  role:response.role }, process.env.TOKEN_SECRET,{ expiresIn: '1h' });
-              var decoded = jwt.verify(accessToken,  process.env.TOKEN_SECRET);
-              console.log(decoded) // bar
+              var accessToken = jwt.verify(accessToken,  process.env.TOKEN_SECRET);
+              console.log(accessToken) // bar
               res.send({ mensaje: "Success", token:accessToken, data: userFilter});
 
             })
@@ -215,8 +215,13 @@ router.post("/login", function(req, res, next) {
 router.post("/orden", (req, res) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
-    const token = authHeader.split(" ")[1];
-    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+    const accessToken = authHeader.split(" ")[1];
+    var response = jwt.verify(accessToken,  process.env.TOKEN_SECRET);
+              console.log(response) 
+    console.log(accessToken);
+    jwt.verify(accessToken, process.env.TOKEN_SECRET, (err, user) => {
+      console.log(user);
+      console.log(err);
       if (err) {
         return res.sendStatus(403);
       }
