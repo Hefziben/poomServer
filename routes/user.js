@@ -211,6 +211,32 @@ router.post("/login", function(req, res, next) {
   });
 });
 
+//add orden
+router.post("/orden", (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (authHeader) {
+    const token = authHeader.split(" ")[1];
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+
+      //process request
+      const crearOrden = new Orden(req.body);
+      crearOrden.save((err, nuevo_Orden) => {
+        if (err) {
+          errMsj = err.message;
+
+          res.send(errMsj);
+        } else {
+          res.send("Orden guardado con exito");
+        }
+      });
+    });
+  } else {
+    res.sendStatus(401);
+  }
+});
 // router.get("/updatePasswords/:id", (req, res) => {
 //   User.find({}, (err, users) => {
 //     console.log(err);

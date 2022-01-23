@@ -2,8 +2,7 @@ var express = require("express");
 var router = express.Router();
 var Orden = require("../modelos/ordenes");
 const multer = require("multer");
-//const jwt = require("jsonwebtoken");
-const jwt = require("./jwt")
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const storage = multer.diskStorage({
@@ -47,31 +46,24 @@ router.get("/numero/:id", function (req, res, next) {
 router.post("/", (req, res) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
-    const access = authHeader.split(" ")[1];
-   
-    jwt.verify(access, process.env.TOKEN_SECRET, function(err, decoded) {
-      // err
-      console.log(err);
-      console.log(decoded);
-      // decoded undefined
+    const token = authHeader.split(" ")[1];
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+
+      //process request
+      const crearOrden = new Orden(req.body);
+      crearOrden.save((err, nuevo_Orden) => {
+        if (err) {
+          errMsj = err.message;
+
+          res.send(errMsj);
+        } else {
+          res.send("Orden guardado con exito");
+        }
+      });
     });
-    // jwt.verify(token,process.env.TOKEN_SECRET, (err, user) => {
-    //   if (err) {
-    //     return res.statusCode(403);
-    //   }
-
-    //   //process request
-    //   const crearOrden = new Orden(req.body);
-    //   crearOrden.save((err, nuevo_Orden) => {
-    //     if (err) {
-    //       errMsj = err.message;
-
-    //       res.send(errMsj);
-    //     } else {
-    //       res.send("Orden guardado con exito");
-    //     }
-    //   });
-    // });
   } else {
     res.sendStatus(401);
   }
