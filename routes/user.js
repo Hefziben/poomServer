@@ -215,11 +215,11 @@ router.post("/login", function(req, res, next) {
 router.post("/orden", (req, res) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
-    const accessToken = authHeader.split(" ")[1];
-    var response = jwt.verify(accessToken,  process.env.TOKEN_SECRET);
+    const token_1 = authHeader.split(" ")[1];
+    var response = jwt.verify(token_1,  process.env.TOKEN_SECRET);
               console.log(response) 
-    console.log(accessToken);
-    jwt.verify(accessToken, process.env.TOKEN_SECRET, (err, user) => {
+    console.log(token_1);
+    jwt.verify(token_1, process.env.TOKEN_SECRET, (err, user) => {
       console.log(user);
       console.log(err);
       if (err) {
