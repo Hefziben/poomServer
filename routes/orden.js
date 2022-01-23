@@ -49,10 +49,12 @@ router.post("/", (req, res) => {
   if (authHeader) {
     const access = authHeader.split(" ")[1];
    
-    var decoded = jwt.verify(access,  process.env.TOKEN_SECRET);
-    console.log(access);
-              console.log(decoded)
-             res.statusCode(403);
+    jwt.verify(access, process.env.TOKEN_SECRET, function(err, decoded) {
+      // err
+      console.log(err);
+      console.log(decoded);
+      // decoded undefined
+    });
     // jwt.verify(token,process.env.TOKEN_SECRET, (err, user) => {
     //   if (err) {
     //     return res.statusCode(403);
