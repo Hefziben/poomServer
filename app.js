@@ -15,7 +15,7 @@ var promoRouter = require('./routes/promo');
 var interesRouter = require('./routes/interes');
 var adminRouter = require('./routes/admin-user');
 var app = express();
-
+const jwt = require('jsonwebtoken');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

@@ -4,7 +4,8 @@ var User = require("../modelos/user");
 const multer = require("multer");
 require('dotenv').config()
 const { param } = require("./promo");
-const jwt = require('jsonwebtoken');
+//const jwt = require('jsonwebtoken');
+const jwt = require("./jwt")
 const axios = require('axios');
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt');

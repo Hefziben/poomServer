@@ -2,7 +2,8 @@ var express = require("express");
 var router = express.Router();
 var Orden = require("../modelos/ordenes");
 const multer = require("multer");
-const jwt = require("jsonwebtoken");
+//const jwt = require("jsonwebtoken");
+const jwt = require("./jwt")
 require("dotenv").config();
 
 const storage = multer.diskStorage({
