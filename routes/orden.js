@@ -47,9 +47,9 @@ router.get("/numero/:id", function (req, res, next) {
 router.post("/", (req, res) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
-    const token = authHeader.split(" ")[1];
-    console.log(token);
-    var decoded = jwt.verify(token,  process.env.TOKEN_SECRET);
+    const access = authHeader.split(" ")[1];
+    console.log(access);
+    var decoded = jwt.verify(access,  process.env.TOKEN_SECRET);
               console.log(decoded)
               return res.statusCode(403);
     // jwt.verify(token,process.env.TOKEN_SECRET, (err, user) => {
