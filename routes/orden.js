@@ -48,25 +48,27 @@ router.post("/", (req, res) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
     const token = authHeader.split(" ")[1];
+    console.log(token);
     var decoded = jwt.verify(token,  process.env.TOKEN_SECRET);
               console.log(decoded)
-    jwt.verify(token,process.env.TOKEN_SECRET, (err, user) => {
-      if (err) {
-        return res.statusCode(403);
-      }
+              return res.statusCode(403);
+    // jwt.verify(token,process.env.TOKEN_SECRET, (err, user) => {
+    //   if (err) {
+    //     return res.statusCode(403);
+    //   }
 
-      //process request
-      const crearOrden = new Orden(req.body);
-      crearOrden.save((err, nuevo_Orden) => {
-        if (err) {
-          errMsj = err.message;
+    //   //process request
+    //   const crearOrden = new Orden(req.body);
+    //   crearOrden.save((err, nuevo_Orden) => {
+    //     if (err) {
+    //       errMsj = err.message;
 
-          res.send(errMsj);
-        } else {
-          res.send("Orden guardado con exito");
-        }
-      });
-    });
+    //       res.send(errMsj);
+    //     } else {
+    //       res.send("Orden guardado con exito");
+    //     }
+    //   });
+    // });
   } else {
     res.sendStatus(401);
   }
