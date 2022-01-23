@@ -48,10 +48,11 @@ router.post("/", (req, res) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
     const access = authHeader.split(" ")[1];
-    console.log(access);
+   
     var decoded = jwt.verify(access,  process.env.TOKEN_SECRET);
+    console.log(access);
               console.log(decoded)
-              return res.statusCode(403);
+             res.statusCode(403);
     // jwt.verify(token,process.env.TOKEN_SECRET, (err, user) => {
     //   if (err) {
     //     return res.statusCode(403);

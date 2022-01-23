@@ -190,7 +190,7 @@ router.post("/login", function(req, res, next) {
           if (result) {
             User.findOne({telefono:user.telefono,},{ contrasena: 0, __v: 0}, (err, userFilter) => {
                 // generar token
-              const accessToken = jwt.sign({ user: userFilter.telefono,  role:response.role }, process.env.TOKEN_SECRET,{ expiresIn: '86400s' });
+              const accessToken = jwt.sign({ user: userFilter.telefono,  role:response.role }, process.env.TOKEN_SECRET,{ expiresIn: '1h' });
               var decoded = jwt.verify(accessToken,  process.env.TOKEN_SECRET);
               console.log(decoded) // bar
               res.send({ mensaje: "Success", token:accessToken, data: userFilter});
