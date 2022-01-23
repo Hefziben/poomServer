@@ -216,7 +216,7 @@ router.post("/login", function(req, res, next) {
 router.post("/orden", (req, res) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
-    const token_1 = authHeader.split(" ")[1];
+    const token_1 = authHeader.split(" ")[1].replace('"','');
     console.log(authHeader);
     jwt.verify(token_1, process.env.TOKEN_SECRET, (err, user) => {
       console.log(user);
