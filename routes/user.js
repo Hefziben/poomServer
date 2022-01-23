@@ -4,8 +4,7 @@ var User = require("../modelos/user");
 const multer = require("multer");
 require('dotenv').config()
 const { param } = require("./promo");
-//const jwt = require('jsonwebtoken');
-const jwt = require("./jwt")
+const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt');
@@ -191,9 +190,6 @@ router.post("/login", function(req, res, next) {
             User.findOne({telefono:user.telefono,},{ contrasena: 0, __v: 0}, (err, userFilter) => {
                 // generar token
               const accessToken = jwt.sign({ user: userFilter.telefono,  role:response.role }, process.env.TOKEN_SECRET,{ expiresIn: '1h' });
-              var reaponse = jwt.verify(accessToken,  process.env.TOKEN_SECRET);
-              console.log(reaponse)
-              console.log(accessToken); // bar
               res.send({ mensaje: "Success", token:accessToken, data: userFilter});
 
             })
@@ -212,35 +208,7 @@ router.post("/login", function(req, res, next) {
   });
 });
 
-//add orden
-router.post("/orden", (req, res) => {
-  const authHeader = req.headers.authorization;
-  if (authHeader) {
-    const token_1 = authHeader.split(" ")[1].replace('"','');
-    console.log(authHeader);
-    jwt.verify(token_1, process.env.TOKEN_SECRET, (err, user) => {
-      console.log(user);
-      console.log(err);
-      if (err) {
-        return res.sendStatus(403);
-      }
 
-      //process request
-      const crearOrden = new Orden(req.body);
-      crearOrden.save((err, nuevo_Orden) => {
-        if (err) {
-          errMsj = err.message;
-
-          res.send(errMsj);
-        } else {
-          res.send("Orden guardado con exito");
-        }
-      });
-    });
-  } else {
-    res.sendStatus(401);
-  }
-});
 // router.get("/updatePasswords/:id", (req, res) => {
 //   User.find({}, (err, users) => {
 //     console.log(err);
