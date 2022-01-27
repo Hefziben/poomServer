@@ -236,7 +236,9 @@ router.post("/login", function(req, res, next) {
       res.send({ mensaje: "error in get request", res: err });
     } else {
       if (response) {
+        console.log(comercio.password, response.password);
           bcrypt.compare(comercio.password, response.password, function(err, result) {
+            console.log(result,err);
           if (result) {
             Comercio.findOne({telefono:comercio.telefono},{ password: 0, __v: 0}, (err, userFilter) => {
                 // generar token
