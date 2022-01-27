@@ -265,7 +265,7 @@ router.put("/password/:id", (req, res) => {
   const comercio = req.body;
   bcrypt.hash(comercio.password, saltRounds, function(err, hash) {
    comercio.password = hash;
-   console.log(comercio);
+   console.log(comercio.password);
    Comercio.findByIdAndUpdate(comercioId, { $set: comercio }, { new: true })
    .then((data) => {
      console.log(data);
