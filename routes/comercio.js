@@ -142,18 +142,25 @@ router.post("/producto_update", upload.single("file_path"), (req, res) => {
 });
 //add comercio
 router.post("/", (req, res) => { 
-  console.log(req.body);
-      const crearComercio = new Comercio(req.body);
-      crearComercio.save((err, nuevo_Comercio) => {
-        if (err) {
-          errMsj = err.message;
+  let comercio = req.body
 
-          res.send(errMsj);
-        } else {
-          res.send({message:"Comercio guardado con exito"});
-        }
-      });
-  
+  bcrypt.hash(comercio.password, saltRounds, function(err, hash) {
+    comercio.password = hash;
+    console.log(comercio);
+    const crearComercio = new Comercio(comercio);
+    crearComercio.save((err, nuevo_Comercio) => {
+      console.log(nuevo_Comercio);
+      if (err) {
+        errMsj = err.message;
+
+        res.send(errMsj);
+      } else {
+        res.send({message:"Comercio guardado con exito"});
+      }
+    });
+
+  })
+
 
 });
 //get comercio by ID
