@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var Comercio = require("../modelos/comercio");
+var User = require('../modelos/user')
 const multer = require("multer");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
