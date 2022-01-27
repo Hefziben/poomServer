@@ -269,7 +269,7 @@ router.put("/password/:id", (req, res) => {
    console.log(comercio.password);
    Comercio.findByIdAndUpdate(comercioId, { $set: comercio }, { new: true })
    .then((data) => {
-     console.log(data);
+    // console.log(data);
     res.status(200).send({mensaje:'Contrasena cambiada con exito'})})
    .catch(err => res.status(400).send(err));
 });
