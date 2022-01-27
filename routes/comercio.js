@@ -265,6 +265,7 @@ router.put("/password/:id", (req, res) => {
   const comercio = req.body;
   bcrypt.hash(comercio.password, saltRounds, function(err, hash) {
    comercio.password = hash;
+   console.log(commercio);
    User.findByIdAndUpdate(comercioId, { $set: comercio }, { new: true })
    .then(() => res.status(200).send({mensaje:'Contrasena cambiada con exito'}))
    .catch(err => res.status(400).send(err));
