@@ -19,13 +19,25 @@ const upload = multer({
 
 /* GET ordenes listing. */
 router.get("/", function (req, res, next) {
-  Orden.find({}, (err, ordenes) => {
-    if (res.status == 400) {
-      res.send({ mensaje: "error en la petición", res: status, err });
-    } else {
-      res.send(ordenes);
-    }
-  });
+  const authHeader = req.headers.authorization;
+  if (authHeader) {
+    const token = authHeader.split(' ')[1];
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+      if (user.role == 'Admin') {
+        Orden.find({}, (err, ordenes) => {
+          if (res.status == 400) {
+            res.send({ mensaje: "error en la petición", res: status, err });
+          } else {
+            res.send(ordenes);
+          }
+        });
+      }
+    })
+  }
+
 });
 
 /* GET ordenes by order number. */
