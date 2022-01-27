@@ -263,6 +263,7 @@ router.post("/login", function(req, res, next) {
 router.put("/password/:id", (req, res) => {
   const comercioId = req.params.id;
   const comercio = req.body;
+  console.log(comercio.password);
   bcrypt.hash(comercio.password, saltRounds, function(err, hash) {
    comercio.password = hash;
    console.log(comercio.password);
